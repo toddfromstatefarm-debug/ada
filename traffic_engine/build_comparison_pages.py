@@ -55,6 +55,8 @@ def validate_comparison(comp, tools_by_slug):
         return False, f"Tool A '{comp['tool_a_slug']}' not found"
     if comp["tool_b_slug"] not in tools_by_slug:
         return False, f"Tool B '{comp['tool_b_slug']}' not found"
+    if comp["tool_a_slug"] == comp["tool_b_slug"]:
+        return False, "Tool A and Tool B cannot be the same"
     return True, ""
 
 
@@ -153,25 +155,34 @@ def write_sitemap(tools_list, comparisons):
     ]
 
     for tool in tools_list:
-        urls.append({
-            "loc": absolute_url(f"/tools/{tool['slug']}-worth-it-calculator/"),
-            "lastmod": now,
-            "priority": "0.8",
-        })
+        urls.append(
+            {
+                "loc": absolute_url(f"/tools/{tool['slug']}-worth-it-calculator/"),
+                "lastmod": now,
+                "priority": "0.8",
+            }
+        )
 
     for tool in tools_list:
-        urls.append({
-            "loc": absolute_url(f"/pages/{tool['slug']}-review/"),
-            "lastmod": now,
-            "priority": "0.7",
-        })
+        urls.append(
+            {
+                "loc": absolute_url(f"/pages/{tool['slug']}-review/"),
+                "lastmod": now,
+                "priority": "0.7",
+            }
+        )
 
     for comp in comparisons:
-        urls.append({
-            "loc": absolute_url(f"/compare/{comp['slug']}/"),
-            "lastmod": now,
-            "priority": "0.75",
-        })
+        valid_slugs = {tool["slug"] for tool in tools_list}
+        if comp.get("tool_a_slug") not in valid_slugs or comp.get("tool_b_slug") not in valid_slugs:
+            continue
+        urls.append(
+            {
+                "loc": absolute_url(f"/compare/{comp['slug']}/"),
+                "lastmod": now,
+                "priority": "0.75",
+            }
+        )
 
     sitemap_lines = [
         '<?xml version="1.0" encoding="UTF-8"?>',
