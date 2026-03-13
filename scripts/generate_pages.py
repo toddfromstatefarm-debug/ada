@@ -48,7 +48,7 @@ def get_category_fallbacks(category: str):
                 "manual calendar cleanup and rescheduling",
                 "protecting focus / deep work time",
                 "automatic habit scheduling",
-                "smart buffer time around events"
+                "smart buffer time around events",
             ],
             "conservative_hours": "1–2",
             "moderate_hours": "3–5",
@@ -59,7 +59,7 @@ def get_category_fallbacks(category: str):
                 "real-time note taking during calls",
                 "writing post-meeting summaries & recaps",
                 "extracting & tracking action items",
-                "searching / referencing old meetings"
+                "searching / referencing old meetings",
             ],
             "conservative_hours": "1–2",
             "moderate_hours": "2.5–5",
@@ -70,7 +70,7 @@ def get_category_fallbacks(category: str):
                 "first-draft content generation",
                 "rewriting / editing existing copy",
                 "brainstorming and outlining",
-                "creating multiple variants quickly"
+                "creating multiple variants quickly",
             ],
             "conservative_hours": "1.5–3",
             "moderate_hours": "4–7",
@@ -81,46 +81,65 @@ def get_category_fallbacks(category: str):
                 "writing clearer tasks & descriptions",
                 "summarizing updates & progress",
                 "repetitive admin / project cleanup",
-                "basic prioritization & grouping"
+                "basic prioritization & grouping",
             ],
             "conservative_hours": "1–2",
             "moderate_hours": "3–5",
             "aggressive_hours": "6–10",
         },
     }
-    return fallbacks.get(category, {
-        "hours_saved_factors": ["repetitive workflow steps", "manual organization", "context switching", "recap & follow-up work"],
-        "conservative_hours": "1–2",
-        "moderate_hours": "3–5",
-        "aggressive_hours": "6–10",
-    })
+    return fallbacks.get(
+        category,
+        {
+            "hours_saved_factors": [
+                "repetitive workflow steps",
+                "manual organization",
+                "context switching",
+                "recap & follow-up work",
+            ],
+            "conservative_hours": "1–2",
+            "moderate_hours": "3–5",
+            "aggressive_hours": "6–10",
+        },
+    )
 
 
 def format_hours_saved_factors(factors):
     if not factors:
         return ""
-    items = [f"<li>{html.escape(f)}</li>" for f in factors]
-    return "<ul class=\"factors-list\">\n" + "\n".join(items) + "\n</ul>"
+    return "\n".join(f"<li>{html.escape(f)}</li>" for f in factors)
 
 
 def build_related_tools(tools_list, current_tool):
     current_slug = current_tool["slug"]
     current_category = current_tool.get("category", "")
+
     same_category = sorted(
-        [t for t in tools_list if t["slug"] != current_slug and t.get("category", "") == current_category],
+        [
+            t
+            for t in tools_list
+            if t["slug"] != current_slug and t.get("category", "") == current_category
+        ],
         key=lambda t: t["name"].lower(),
     )
+
     related = same_category[:]
     if len(related) < 3:
         fallback = sorted(
-            [t for t in tools_list if t["slug"] != current_slug and t["slug"] not in {r["slug"] for r in related}],
+            [
+                t
+                for t in tools_list
+                if t["slug"] != current_slug and t["slug"] not in {r["slug"] for r in related}
+            ],
             key=lambda t: t["name"].lower(),
         )
-        related.extend(fallback[:3 - len(related)])
+        related.extend(fallback[: 3 - len(related)])
+
     items = []
     for tool in related[:3]:
+        slug = tool["slug"]
         name = html.escape(tool["name"])
-        href = internal_url(f'/tools/{tool["slug"]}-worth-it-calculator/')
+        href = internal_url(f"/tools/{slug}-worth-it-calculator/")
         items.append(f'<li><a href="{href}">{name} Calculator</a></li>')
     return "\n".join(items)
 
@@ -134,7 +153,7 @@ def site_shell_header() -> str:
         f'<a href="{internal_url("/tools/")}">Tools</a>'
         f'<a href="{internal_url("/about/")}">About</a>'
         f'<a href="{internal_url("/methodology/")}">Methodology</a>'
-        f'</nav></div></header>'
+        f"</nav></div></header>"
     )
 
 
@@ -157,25 +176,47 @@ def generate_calculator_page(tool, tools_list, template):
     name = html.escape(tool["name"])
     monthly_price = tool.get("monthly_price", 0)
     default_hours = tool.get("default_hours_saved", 3)
-
     affiliate_link = html.escape(tool.get("affiliate_link", "#"), quote=True)
 
-    calculator_intro   = html.escape(tool.get("calculator_intro",   f"{name} helps automate parts of your workflow. This calculator estimates whether the time saved justifies the monthly cost."))
-    pricing_basis      = html.escape(tool.get("pricing_basis",       f"Uses the most common individual plan price (~${monthly_price}/mo). Check current official pricing."))
-    interpretation_note = html.escape(tool.get("interpretation_note", "Positive results require consistent usage of the tool's core features. Low adoption = much lower real savings."))
-
-    hourly_rate_guidance = html.escape(tool.get("hourly_rate_guidance", "Freelancers: use client billing rate. Salaried: salary ÷ 2080. If unsure, start conservative."))
+    calculator_intro = html.escape(
+        tool.get(
+            "calculator_intro",
+            f"{name} helps automate parts of your workflow. This calculator estimates whether the time saved justifies the monthly cost.",
+        )
+    )
+    pricing_basis = html.escape(
+        tool.get(
+            "pricing_basis",
+            f"Uses the most common individual plan price (~${monthly_price}/mo). Check current official pricing.",
+        )
+    )
+    interpretation_note = html.escape(
+        tool.get(
+            "interpretation_note",
+            "Positive results require consistent usage of the tool's core features. Low adoption means much lower real savings.",
+        )
+    )
+    hourly_rate_guidance = html.escape(
+        tool.get(
+            "hourly_rate_guidance",
+            "Freelancers: use client billing rate. Salaried: salary ÷ 2080. If unsure, start conservative.",
+        )
+    )
 
     fb = get_category_fallbacks(tool.get("category", ""))
     conservative = tool.get("conservative_hours", fb["conservative_hours"])
-    moderate     = tool.get("moderate_hours",     fb["moderate_hours"])
-    aggressive   = tool.get("aggressive_hours",   fb["aggressive_hours"])
-
+    moderate = tool.get("moderate_hours", fb["moderate_hours"])
+    aggressive = tool.get("aggressive_hours", fb["aggressive_hours"])
     factors_list = tool.get("hours_saved_factors", fb["hours_saved_factors"])
     factors_html = format_hours_saved_factors(factors_list)
 
-    best_for    = html.escape(tool.get("best_for_override")    or "Professionals looking to save time in recurring workflows.")
-    not_ideal   = html.escape(tool.get("not_ideal_for_override") or "Users with very light workloads or little need for this kind of automation.")
+    best_for = html.escape(
+        tool.get("best_for_override") or "Professionals looking to save time in recurring workflows."
+    )
+    not_ideal = html.escape(
+        tool.get("not_ideal_for_override")
+        or "Users with very light workloads or little need for this kind of automation."
+    )
 
     return template.format(
         tool_name=name,
@@ -208,8 +249,12 @@ def generate_calculator_page(tool, tools_list, template):
 def generate_hub_page(tools_list):
     items = []
     for tool in sorted(tools_list, key=lambda t: t["name"].lower()):
-        items.append(f'<li><a href="{internal_url(f"/tools/{tool["slug"]}-worth-it-calculator/")}">{html.escape(tool["name"])} Calculator</a></li>')
+        slug = tool["slug"]
+        name = html.escape(tool["name"])
+        href = internal_url(f"/tools/{slug}-worth-it-calculator/")
+        items.append(f'<li><a href="{href}">{name} Calculator</a></li>')
     joined = "\n      ".join(items)
+
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -239,18 +284,32 @@ def generate_homepage(tools_list, comparisons):
     featured_reviews = featured_tools[:4]
     featured_comparisons = comparisons[:4] if comparisons else []
 
-    tool_items = "\n      ".join(
-        f'<li><a href="{internal_url(f"/tools/{t["slug"]}-worth-it-calculator/")}">{html.escape(t["name"])} Calculator</a></li>'
-        for t in featured_tools
-    )
-    review_items = "\n      ".join(
-        f'<li><a href="{internal_url(f"/pages/{t["slug"]}-review/")}">{html.escape(t["name"])} Review</a></li>'
-        for t in featured_reviews
-    )
-    comparison_items = "\n      ".join(
-        f'<li><a href="{internal_url(f"/compare/{c["slug"]}/")}">{html.escape(c.get("title", c["slug"].replace("-", " ").title()))}</a></li>'
-        for c in featured_comparisons
-    ) if featured_comparisons else "<li>No comparisons added yet</li>"
+    tool_items_list = []
+    for tool in featured_tools:
+        slug = tool["slug"]
+        name = html.escape(tool["name"])
+        href = internal_url(f"/tools/{slug}-worth-it-calculator/")
+        tool_items_list.append(f'<li><a href="{href}">{name} Calculator</a></li>')
+    tool_items = "\n      ".join(tool_items_list)
+
+    review_items_list = []
+    for tool in featured_reviews:
+        slug = tool["slug"]
+        name = html.escape(tool["name"])
+        href = internal_url(f"/pages/{slug}-review/")
+        review_items_list.append(f'<li><a href="{href}">{name} Review</a></li>')
+    review_items = "\n      ".join(review_items_list)
+
+    if featured_comparisons:
+        comparison_items_list = []
+        for comp in featured_comparisons:
+            slug = comp["slug"]
+            title = html.escape(comp.get("title", slug.replace("-", " ").title()))
+            href = internal_url(f"/compare/{slug}/")
+            comparison_items_list.append(f'<li><a href="{href}">{title}</a></li>')
+        comparison_items = "\n      ".join(comparison_items_list)
+    else:
+        comparison_items = "<li>No comparisons added yet</li>"
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -273,9 +332,9 @@ def generate_homepage(tools_list, comparisons):
     <section class="card how-it-works">
       <h2>How It Works – 3 Steps</h2>
       <ol>
-        <li>Enter your real hourly value (what an extra focused hour is actually worth to you).</li>
-        <li>Estimate weekly hours saved — use conservative, moderate, or aggressive ranges provided.</li>
-        <li>See instant monthly & annual net gain/loss + plain-English verdict.</li>
+        <li>Enter your real hourly value.</li>
+        <li>Estimate weekly hours saved using conservative, moderate, or aggressive ranges.</li>
+        <li>See monthly and annual net gain/loss with a plain-English verdict.</li>
       </ol>
       <p><strong>Important:</strong> Results are only as good as your assumptions. Test multiple scenarios. Read the <a href="{internal_url('/methodology/')}">methodology</a> to understand how we calculate value.</p>
       <p class="small-note">Pricing references were checked recently, but software pricing changes fast. Always verify on the official site before subscribing.</p>
@@ -305,7 +364,7 @@ def generate_homepage(tools_list, comparisons):
 
     <section class="card trust-callout">
       <h2>Why trust these calculators?</h2>
-      <p>We focus on <em>your</em> time value — not generic hype. Every tool page includes realistic ranges, category-specific guidance, and clear warnings about when results overstate value. No magic multipliers. Just math + honest context.</p>
+      <p>We focus on <em>your</em> time value — not generic hype. Every tool page includes realistic ranges, category-specific guidance, and clear warnings about when results overstate value. No magic multipliers. Just math and honest context.</p>
       <p><a href="{internal_url('/methodology/')}">Read full methodology →</a></p>
     </section>
   </main>
@@ -322,14 +381,36 @@ def generate_sitemap(tools_list, comparisons):
         {"loc": absolute_url("/"), "lastmod": now, "priority": "1.0"},
         {"loc": absolute_url("/tools/"), "lastmod": now, "priority": "0.9"},
     ]
-    for tool in tools_list:
-        urls.append({"loc": absolute_url(f'/tools/{tool["slug"]}-worth-it-calculator/'), "lastmod": now, "priority": "0.8"})
-        urls.append({"loc": absolute_url(f'/pages/{tool["slug"]}-review/'), "lastmod": now, "priority": "0.7"})
-    for comp in comparisons:
-        urls.append({"loc": absolute_url(f'/compare/{comp["slug"]}/'), "lastmod": now, "priority": "0.75"})
 
-    sitemap = ['<?xml version="1.0" encoding="UTF-8"?>']
-    sitemap.append('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')
+    for tool in tools_list:
+        urls.append(
+            {
+                "loc": absolute_url(f"/tools/{tool['slug']}-worth-it-calculator/"),
+                "lastmod": now,
+                "priority": "0.8",
+            }
+        )
+        urls.append(
+            {
+                "loc": absolute_url(f"/pages/{tool['slug']}-review/"),
+                "lastmod": now,
+                "priority": "0.7",
+            }
+        )
+
+    for comp in comparisons:
+        urls.append(
+            {
+                "loc": absolute_url(f"/compare/{comp['slug']}/"),
+                "lastmod": now,
+                "priority": "0.75",
+            }
+        )
+
+    sitemap = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    ]
     for entry in urls:
         sitemap.append("  <url>")
         sitemap.append(f'    <loc>{html.escape(entry["loc"])}</loc>')
@@ -357,8 +438,9 @@ def main():
 
     tools_dir = root / "tools"
     tools_dir.mkdir(parents=True, exist_ok=True)
+
     for tool in valid_tools:
-        calc_dir = tools_dir / f'{tool["slug"]}-worth-it-calculator'
+        calc_dir = tools_dir / f"{tool['slug']}-worth-it-calculator"
         calc_dir.mkdir(parents=True, exist_ok=True)
         content = generate_calculator_page(tool, valid_tools, calc_template)
         (calc_dir / "index.html").write_text(content, encoding="utf-8")

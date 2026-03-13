@@ -132,7 +132,7 @@
   </footer>
 
   <script>
-  function calculate() {
+  function calculate() {{
     const rate = parseFloat(document.getElementById('rate').value) || 0;
     const hours = parseFloat(document.getElementById('hours').value) || 0;
     const price = parseFloat(document.getElementById('price').value) || 0;
@@ -143,18 +143,18 @@
     const verdictEl = document.getElementById('verdict');
     verdictEl.className = 'verdict';
     verdictEl.textContent = '';
-    if (monthlyGain > 200) {
+    if (monthlyGain > 200) {{
       verdictEl.textContent = 'This looks clearly worth it — assuming consistent real usage.';
       verdictEl.classList.add('verdict-strong');
-    } else if (monthlyGain > 0) {
+    }} else if (monthlyGain > 0) {{
       verdictEl.textContent = 'This can be worth it — but only if you actually adopt and use the tool regularly.';
       verdictEl.classList.add('verdict-borderline');
-    } else {
+    }} else {{
       verdictEl.textContent = 'Probably not worth it under these assumptions. Either savings are lower than expected or workflow fit is weak.';
       verdictEl.classList.add('verdict-negative');
-    }
+    }}
     document.getElementById('result').style.display = 'block';
-  }
+  }}
   </script>
 </body>
 </html>
