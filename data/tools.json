@@ -38,7 +38,21 @@
     "aggressive_hours": "6–9",
     "hourly_rate_guidance": "Freelancers: use your real client billing rate (after expenses if you want to be conservative). Salaried: annual take-home ÷ 2080 workable hours. Side hustlers: realistic replacement cost of your time.",
     "calculator_intro": "Reclaim.ai reduces manual calendar juggling and protects deep work time. This calculator estimates whether those reclaimed hours are worth more than the subscription cost in your real week.",
-    "interpretation_note": "Positive numbers only matter if you consistently let Reclaim protect focus time and handle routine rescheduling. If you mostly ignore its suggestions, actual savings will be much lower."
+    "interpretation_note": "Positive numbers only matter if you consistently let Reclaim protect focus time and handle routine rescheduling. If you mostly ignore its suggestions, actual savings will be much lower.",
+    "quick_verdict": "Best calendar defender available for focus-oriented knowledge workers.",
+    "biggest_strength": "Protects deep-work blocks and habits more aggressively and intelligently than competitors.",
+    "biggest_weakness": "Does almost nothing for task overload or poor prioritization — calendar-first only.",
+    "common_praise": [
+      "Finally a tool that treats focus time as sacred",
+      "Smart buffers and auto-rescheduling actually work",
+      "Feels respectful of how humans actually work"
+    ],
+    "common_complaints": [
+      "Can feel too conservative / passive if you want aggressive task scheduling",
+      "Limited leverage if your calendar is already empty or rigid",
+      "Doesn’t solve the underlying to-do list firehose"
+    ],
+    "real_world_fit": "If your calendar keeps eating your best thinking time — meetings bleeding into focus blocks, habits getting pushed forever — Reclaim is often the cleanest fix. If your week is collapsing because of too many open tasks and poor prioritization (not meetings), Motion or a dedicated task system usually helps more."
   },
   {
     "name": "Motion",
@@ -79,7 +93,21 @@
     "aggressive_hours": "7–12",
     "hourly_rate_guidance": "Freelancers: client rate after expenses. Salaried: salary ÷ 2080. Founders/solopreneurs: what your most valuable hour actually generates.",
     "calculator_intro": "Motion tries to eliminate most of your daily planning effort by turning tasks into an intelligent calendar. Use this to see if the time it saves outweighs the cost.",
-    "interpretation_note": "Results depend heavily on whether you trust Motion's scheduling decisions and follow them most days. High manual overrides = much lower real savings."
+    "interpretation_note": "Results depend heavily on whether you trust Motion's scheduling decisions and follow them most days. High manual overrides = much lower real savings.",
+    "quick_verdict": "Powerful auto-pilot for overloaded solopreneurs — if you can tolerate the control tradeoff.",
+    "biggest_strength": "Turns chaotic task lists into realistic daily schedules better than almost anything else.",
+    "biggest_weakness": "Constant re-prioritization and auto-shuffling can feel intrusive or destabilizing.",
+    "common_praise": [
+      "Eliminates most daily planning anxiety when trusted",
+      "Handles shifting deadlines and reprioritization gracefully",
+      "Feels like having a very disciplined assistant"
+    ],
+    "common_complaints": [
+      "Too opinionated — many users fight it or override constantly",
+      "Setup and trust-building phase is longer than expected",
+      "Can create a false sense of control if tasks are poorly defined"
+    ],
+    "real_world_fit": "If your week constantly collapses under shifting priorities, new client requests, and too many important tasks, Motion can rebuild structure fast — provided you accept software reshaping your day. If you prefer manual control, reflective planning, or have a very stable routine, Sunsama or even plain calendar blocking usually feels better."
   },
   {
     "name": "Notion AI",
@@ -120,7 +148,21 @@
     "aggressive_hours": "5–8",
     "hourly_rate_guidance": "Creators/writers: what you charge per hour of final output. Salaried: salary ÷ 2080. If unsure, start conservative ($40–60).",
     "calculator_intro": "Notion AI helps most when you're already living in Notion. This calculator checks whether the small-but-frequent time savings justify the add-on cost.",
-    "interpretation_note": "Savings are very usage-dependent. If you rarely use Notion AI features, even a positive number here won't reflect reality."
+    "interpretation_note": "Savings are very usage-dependent. If you rarely use Notion AI features, even a positive number here won't reflect reality.",
+    "quick_verdict": "Strong, low-friction boost — but only if Notion is already your central workspace.",
+    "biggest_strength": "Seamless integration — feels like a native feature, not a bolted-on AI.",
+    "biggest_weakness": "Shallow reasoning depth compared to standalone frontier models.",
+    "common_praise": [
+      "Saves time cleaning up messy notes without leaving the page",
+      "Great for turning braindumps into structured docs quickly",
+      "Feels lightweight and unobtrusive"
+    ],
+    "common_complaints": [
+      "Output can feel generic or surface-level on complex topics",
+      "Limited context window makes long-document work frustrating",
+      "Worthless if you’re not already a heavy Notion user"
+    ],
+    "real_world_fit": "If most of your day is notes, summaries, databases, wikis, and knowledge cleanup inside Notion, this usually feels frictionless and quietly valuable. If you live mostly in Google Docs, email, or chat interfaces, it adds almost nothing."
   },
   {
     "name": "Jasper",
@@ -161,7 +203,21 @@
     "aggressive_hours": "10–15",
     "hourly_rate_guidance": "Marketing freelancers: your hourly project rate. Agencies: blended team rate. Solo casual users: be very conservative ($30–50).",
     "calculator_intro": "Jasper accelerates repeatable content workflows. This calculator helps determine if the speed gain covers the relatively high monthly cost.",
-    "interpretation_note": "High savings require regular, structured content output. Occasional or one-off use usually produces much lower real value."
+    "interpretation_note": "High savings require regular, structured content output. Occasional or one-off use usually produces much lower real value.",
+    "quick_verdict": "Still one of the better specialized marketing content engines — but the value equation has tightened significantly.",
+    "biggest_strength": "Brand voice control and campaign-style workflows remain better than most general-purpose tools.",
+    "biggest_weakness": "High monthly price increasingly hard to justify for solo or low-volume users.",
+    "common_praise": [
+      "Fast first drafts for blogs, ads, emails when brand guidelines are set",
+      "Multiple variants save time on A/B testing copy",
+      "Still among the better tools for staying on-voice at scale"
+    ],
+    "common_complaints": [
+      "Output still needs heavy editing to avoid sounding formulaic",
+      "Cost feels steep compared to general models + good prompting",
+      "Overkill for anyone not producing consistent branded volume"
+    ],
+    "real_world_fit": "If you (or your team) publish high-volume brand-sensitive content — blog series, newsletters, ad campaigns, landing pages — Jasper can still compress first-draft time meaningfully. If you write sporadically or mostly need occasional help, the subscription rarely pays off anymore."
   },
   {
     "name": "ClickUp AI",
@@ -202,7 +258,21 @@
     "aggressive_hours": "6–10",
     "hourly_rate_guidance": "Team leads/managers: your effective hourly value. Freelancers: client rate. Solo users: conservative estimate of admin time value.",
     "calculator_intro": "ClickUp AI saves time mostly inside an already-active ClickUp workspace. This calculator checks if the small-but-frequent gains justify the add-on.",
-    "interpretation_note": "Almost all value disappears if your team doesn't consistently use ClickUp. Low adoption = near-zero savings."
+    "interpretation_note": "Almost all value disappears if your team doesn't consistently use ClickUp. Low adoption = near-zero savings.",
+    "quick_verdict": "Useful multiplier — but only inside an already healthy ClickUp workspace.",
+    "biggest_strength": "Reduces repetitive project-writing grunt work at very low incremental cost.",
+    "biggest_weakness": "Feels like one more layer on top of an already complex system.",
+    "common_praise": [
+      "Task descriptions and status updates get written 3–4× faster",
+      "Good at turning scattered comments into clean summaries",
+      "Cheap way to sprinkle AI across an existing workflow"
+    ],
+    "common_complaints": [
+      "Doesn’t fix underlying ClickUp bloat or poor adoption",
+      "AI suggestions sometimes feel tacked-on rather than deeply integrated",
+      "Minimal value for solo users or light ClickUp teams"
+    ],
+    "real_world_fit": "If your day already contains tasks, statuses, owners, dependencies, sprints, and execution inside ClickUp, the AI quietly removes a surprising amount of admin drag. If your projects live mostly in email, Slack, or spreadsheets, this adds almost no leverage."
   },
   {
     "name": "Todoist AI",
