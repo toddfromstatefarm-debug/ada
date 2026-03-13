@@ -3,8 +3,20 @@ import datetime
 import html
 from pathlib import Path
 
-ROOT_URL = "https://aiproductivitycalculators.com"
+SITE_BASE_PATH = "/ada"
+SITE_ROOT_URL = "https://toddfromstatefarm-debug.github.io/ada"
 
+
+def site_path(path: str) -> str:
+    if not path.startswith("/"):
+        path = "/" + path
+    return f"{SITE_BASE_PATH}{path}"
+
+
+def site_url(path: str) -> str:
+    if not path.startswith("/"):
+        path = "/" + path
+    return f"{SITE_ROOT_URL}{path}"
 
 def project_root() -> Path:
     return Path(__file__).resolve().parent.parent
@@ -64,7 +76,7 @@ def build_related_links(tools_list, tool_a_slug, tool_b_slug):
     for tool in sorted(tools_list, key=lambda t: t["name"].lower()):
         if tool["slug"] in (tool_a_slug, tool_b_slug):
             continue
-        related.append(f'<li><a href="/tools/{tool["slug"]}-worth-it-calculator/">{html.escape(tool["name"])} Calculator</a></li>')
+        related.append(f'<li><a href="{SITE_BASE_PATH}/tools/{tool["slug"]}-worth-it-calculator/">{html.escape(tool["name"])} Calculator</a></li>')
         if len(related) >= 4:
             break
     return "\n".join(related)
@@ -103,15 +115,15 @@ def render_comparison_page(comp, tools_list, template):
 def write_sitemap(tools_list, comparisons):
     now = datetime.date.today().isoformat()
     urls = [
-        {"loc": f"{ROOT_URL}/", "lastmod": now, "priority": "1.0"},
-        {"loc": f"{ROOT_URL}/tools/", "lastmod": now, "priority": "0.9"},
+        {"loc": f"{SITE_ROOT_URL}/", "lastmod": now, "priority": "1.0"},
+        {"loc": f"{SITE_ROOT_URL}/tools/", "lastmod": now, "priority": "0.9"},
     ]
     for tool in tools_list:
-        urls.append({"loc": f"{ROOT_URL}/tools/{tool['slug']}-worth-it-calculator/", "lastmod": now, "priority": "0.8"})
+        urls.append({"loc": f"{SITE_ROOT_URL}/tools/{tool['slug']}-worth-it-calculator/", "lastmod": now, "priority": "0.8"})
     for tool in tools_list:
-        urls.append({"loc": f"{ROOT_URL}/pages/{tool['slug']}-review/", "lastmod": now, "priority": "0.7"})
+        urls.append({"loc": f"{SITE_ROOT_URL}/pages/{tool['slug']}-review/", "lastmod": now, "priority": "0.7"})
     for comp in comparisons:
-        urls.append({"loc": f"{ROOT_URL}/compare/{comp['slug']}/", "lastmod": now, "priority": "0.75"})
+        urls.append({"loc": f"{SITE_ROOT_URL}/compare/{comp['slug']}/", "lastmod": now, "priority": "0.75"})
     lines = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for u in urls:
         lines.append("  <url>")

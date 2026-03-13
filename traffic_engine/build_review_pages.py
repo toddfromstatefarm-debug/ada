@@ -3,7 +3,20 @@ import datetime
 import html
 from pathlib import Path
 
-ROOT_URL = "https://aiproductivitycalculators.com"
+SITE_BASE_PATH = "/ada"
+SITE_ROOT_URL = "https://toddfromstatefarm-debug.github.io/ada"
+
+
+def site_path(path: str) -> str:
+    if not path.startswith("/"):
+        path = "/" + path
+    return f"{SITE_BASE_PATH}{path}"
+
+
+def site_url(path: str) -> str:
+    if not path.startswith("/"):
+        path = "/" + path
+    return f"{SITE_ROOT_URL}{path}"
 
 def project_root() -> Path:
     return Path(__file__).resolve().parent.parent
@@ -36,7 +49,7 @@ def build_related_tools(tools_list, current_tool):
     if len(related) < 3:
         fallback = sorted([t for t in tools_list if t["slug"] != current_slug and t["slug"] not in {r["slug"] for r in related}], key=lambda t: t["name"].lower())
         related.extend(fallback[: 3 - len(related)])
-    return "\n".join(f'<li><a href="/pages/{tool["slug"]}-review/">{html.escape(tool["name"])} Review</a></li>' for tool in related[:3])
+    return "\n".join(f'<li><a href="{SITE_BASE_PATH}/pages/{tool["slug"]}-review/">{html.escape(tool["name"])} Review</a></li>' for tool in related[:3])
 
 def render_list_items(items):
     return "\n".join(f"<li>{html.escape(item)}</li>" for item in items)
@@ -56,7 +69,7 @@ def render_review_page(tool, tools_list, template):
         cons=render_list_items(tool.get("cons", ["Requires setup and habit changes", "Recurring monthly cost", "Real value depends on usage"])),
         monthly_price=tool.get("monthly_price", 0),
         pricing_note=html.escape(tool.get("pricing_note", "Check the official site for current pricing and plan details.")),
-        calculator_path=f'/tools/{tool["slug"]}-worth-it-calculator/',
+        calculator_path=site_path(f'/tools/{tool["slug"]}-worth-it-calculator/'),
         tool_name=html.escape(tool["name"]),
         affiliate_link=html.escape(tool.get("affiliate_link", "#"), quote=True),
         related_tools=build_related_tools(tools_list, tool),
@@ -65,11 +78,11 @@ def render_review_page(tool, tools_list, template):
 
 def generate_sitemap(tools_list):
     now = datetime.date.today().isoformat()
-    urls = [{"loc": f"{ROOT_URL}/", "lastmod": now, "priority": "1.0"}, {"loc": f"{ROOT_URL}/tools/", "lastmod": now, "priority": "0.9"}]
+    urls = [{"loc": f"{SITE_ROOT_URL}/", "lastmod": now, "priority": "1.0"}, {"loc": f"{SITE_ROOT_URL}/tools/", "lastmod": now, "priority": "0.9"}]
     for tool in tools_list:
-        urls.append({"loc": f'{ROOT_URL}/tools/{tool["slug"]}-worth-it-calculator/', "lastmod": now, "priority": "0.8"})
+        urls.append({"loc": f'{SITE_ROOT_URL}/tools/{tool["slug"]}-worth-it-calculator/', "lastmod": now, "priority": "0.8"})
     for tool in tools_list:
-        urls.append({"loc": f'{ROOT_URL}/pages/{tool["slug"]}-review/', "lastmod": now, "priority": "0.7"})
+        urls.append({"loc": f'{SITE_ROOT_URL}/pages/{tool["slug"]}-review/', "lastmod": now, "priority": "0.7"})
     out = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for entry in urls:
         out.extend(["  <url>", f'    <loc>{html.escape(entry["loc"])}</loc>', f'    <lastmod>{entry["lastmod"]}</lastmod>', f'    <priority>{entry["priority"]}</priority>', "  </url>"])
