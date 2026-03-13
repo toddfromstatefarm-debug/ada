@@ -11,12 +11,23 @@ def project_root() -> Path:
 
 
 def load_tools():
-    with (project_root() / "data" / "tools.json").open("r", encoding="utf-8") as f:
+    tools_path = project_root() / "data" / "tools.json"
+    with tools_path.open("r", encoding="utf-8") as f:
         return json.load(f)
 
 
 def load_template():
-    return (project_root() / "templates" / "calculator.html").read_text(encoding="utf-8")
+    template_path = project_root() / "templates" / "calculator.html"
+    with template_path.open("r", encoding="utf-8") as f:
+        return f.read()
+
+
+def load_comparisons():
+    comp_path = project_root() / "data" / "comparisons.json"
+    if comp_path.exists():
+        with comp_path.open("r", encoding="utf-8") as f:
+            return json.load(f)
+    return []
 
 
 def get_category_copy(category: str):
@@ -38,86 +49,276 @@ def get_category_copy(category: str):
             "not_ideal_for": "People who rarely join meetings or who do not need searchable notes and summaries.",
         },
     }
-    return copies.get(category, {
-        "best_for": "Professionals looking to save time in recurring workflows.",
-        "not_ideal_for": "Users with very light workloads or little need for automation.",
-    })
+    return copies.get(
+        category,
+        {
+            "best_for": "Professionals looking to save time in recurring workflows.",
+            "not_ideal_for": "Users with very light workloads or little need for automation.",
+        },
+    )
 
 
 def validate_tool(tool):
-    required = ["name", "slug", "monthly_price", "default_hours_saved", "affiliate_link", "short_summary", "category"]
+    required = [
+        "name",
+        "slug",
+        "monthly_price",
+        "default_hours_saved",
+        "affiliate_link",
+        "short_summary",
+        "category",
+    ]
     for field in required:
         if field not in tool:
             return False, f"Missing field '{field}'"
         if isinstance(tool[field], str) and not tool[field].strip():
             return False, f"Empty field '{field}'"
+    if not isinstance(tool["name"], str):
+        return False, "name must be a string"
+    if not isinstance(tool["slug"], str):
+        return False, "slug must be a string"
+    if not isinstance(tool["monthly_price"], (int, float)) or tool["monthly_price"] < 0:
+        return False, "monthly_price must be a non-negative number"
+    if not isinstance(tool["default_hours_saved"], (int, float)) or tool["default_hours_saved"] < 0:
+        return False, "default_hours_saved must be a non-negative number"
+    if not str(tool["affiliate_link"]).startswith(("http://", "https://")):
+        return False, "affiliate_link must be a valid URL"
+    if not isinstance(tool["category"], str):
+        return False, "category must be a string"
     return True, ""
 
 
 def build_related_tools(tools_list, current_tool):
     current_slug = current_tool["slug"]
     current_category = current_tool.get("category", "")
-    same_category = sorted([t for t in tools_list if t["slug"] != current_slug and t.get("category", "") == current_category], key=lambda t: t["name"].lower())
+    same_category = sorted(
+        [t for t in tools_list if t["slug"] != current_slug and t.get("category", "") == current_category],
+        key=lambda t: t["name"].lower(),
+    )
     related = same_category[:]
     if len(related) < 3:
-        fallback = sorted([t for t in tools_list if t["slug"] != current_slug and t["slug"] not in {r["slug"] for r in related}], key=lambda t: t["name"].lower())
+        fallback = sorted(
+            [t for t in tools_list if t["slug"] != current_slug and t["slug"] not in {r["slug"] for r in related}],
+            key=lambda t: t["name"].lower(),
+        )
         related.extend(fallback[: 3 - len(related)])
-    return "\n".join(f'<li><a href="/tools/{tool["slug"]}-worth-it-calculator/">{html.escape(tool["name"])} Calculator</a></li>' for tool in related[:3])
+    items = []
+    for tool in related[:3]:
+        name = html.escape(tool["name"])
+        href = f'/tools/{tool["slug"]}-worth-it-calculator/'
+        items.append(f'<li><a href="{href}">{name} Calculator</a></li>')
+    return "\n".join(items)
 
 
 def generate_calculator_page(tool, tools_list, template):
     now = datetime.date.today()
-    copy = get_category_copy(tool.get("category", ""))
+    last_updated = now.strftime("%B %Y")
+    name = html.escape(tool["name"])
+    monthly_price = tool.get("monthly_price", 0)
+    default_hours_saved = tool.get("default_hours_saved", 0)
+    affiliate_link = html.escape(tool.get("affiliate_link", "#"), quote=True)
+    category = tool.get("category", "")
+    copy = get_category_copy(category)
+    best_for = html.escape(tool.get("best_for_override") or copy["best_for"])
+    not_ideal_for = html.escape(tool.get("not_ideal_for_override") or copy["not_ideal_for"])
     return template.format(
-        tool_name=html.escape(tool["name"]),
-        monthly_price=tool.get("monthly_price", 0),
-        default_hours_saved=tool.get("default_hours_saved", 0),
-        affiliate_link=html.escape(tool.get("affiliate_link", "#"), quote=True),
-        last_updated=now.strftime("%B %Y"),
-        best_for=html.escape(tool.get("best_for_override") or copy["best_for"]),
-        not_ideal_for=html.escape(tool.get("not_ideal_for_override") or copy["not_ideal_for"]),
+        tool_name=name,
+        monthly_price=monthly_price,
+        default_hours_saved=default_hours_saved,
+        affiliate_link=affiliate_link,
+        last_updated=last_updated,
+        best_for=best_for,
+        not_ideal_for=not_ideal_for,
         related_tools=build_related_tools(tools_list, tool),
     )
 
 
 def generate_hub_page(tools_list):
-    items = "".join(f'<li><a href="/tools/{tool["slug"]}-worth-it-calculator/">{html.escape(tool["name"])} </a></li>' for tool in sorted(tools_list, key=lambda t: t["name"].lower()))
-    return f'<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>All Tools - AI Productivity Calculators</title><meta name="description" content="Browse all AI productivity calculators on the site."><link rel="stylesheet" href="/assets/styles.css"></head><body><header class="site-header"><div class="container header-inner"><a class="brand" href="/">AI Productivity Calculators</a><nav class="site-nav"><a href="/">Home</a><a href="/tools/">Tools</a><a href="/about/">About</a><a href="/methodology/">Methodology</a></nav></div></header><main class="container"><section class="hero"><h1>All Tools</h1><p>This library gathers every calculator on the site in one place. Use it to compare likely value across different categories of AI tools before you add another monthly subscription.</p></section><section class="card"><ul>{items}</ul></section></main><footer class="site-footer"><div class="container"><ul class="footer-links"><li><a href="/about/">About</a></li><li><a href="/contact/">Contact</a></li><li><a href="/privacy/">Privacy</a></li><li><a href="/disclosure/">Disclosure</a></li><li><a href="/methodology/">Methodology</a></li></ul><p class="small">&copy; 2026 AI Productivity Calculators. All rights reserved.</p></div></footer></body></html>'
+    items = []
+    for tool in sorted(tools_list, key=lambda t: t["name"].lower()):
+        items.append(f'<li><a href="/tools/{tool["slug"]}-worth-it-calculator/">{html.escape(tool["name"])} Calculator</a></li>')
+    joined = "\n      ".join(items)
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Tools - AI Productivity Calculators</title>
+  <meta name="description" content="Browse all AI productivity calculators on the site.">
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1><a href="/">AI Productivity Calculators</a></h1>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/tools/">Tools</a>
+        <a href="/about/">About</a>
+        <a href="/methodology/">Methodology</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>All Tools</h1>
+    <p>Browse every calculator on the site and quickly estimate whether a given tool is worth the monthly cost for your workflow.</p>
+    <ul>
+      {joined}
+    </ul>
+  </main>
+
+  <footer>
+    <div class="container">
+      <ul>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/contact/">Contact</a></li>
+        <li><a href="/privacy/">Privacy</a></li>
+        <li><a href="/disclosure/">Disclosure</a></li>
+        <li><a href="/methodology/">Methodology</a></li>
+      </ul>
+      <p>© 2026 AI Productivity Calculators. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
+"""
 
 
-def generate_homepage(tools_list):
-    featured = "".join(f'<li><a href="/tools/{tool["slug"]}-worth-it-calculator/">{html.escape(tool["name"])} </a></li>' for tool in tools_list[:5])
-    return f'<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>AI Productivity Calculators</title><meta name="description" content="Free calculators and review pages to help decide whether AI productivity tools are worth the money."><link rel="stylesheet" href="/assets/styles.css"></head><body><header class="site-header"><div class="container header-inner"><a class="brand" href="/">AI Productivity Calculators</a><nav class="site-nav"><a href="/">Home</a><a href="/tools/">Tools</a><a href="/about/">About</a><a href="/methodology/">Methodology</a></nav></div></header><main class="container"><section class="hero"><h1>Decide if an AI tool actually pays for itself</h1><p>This site exists to answer one practical question: does the software save enough time to justify the monthly cost? Instead of vague hype, each page pushes the decision back to your hourly value, your workload, and your real usage.</p><p><a class="button" href="/methodology/">How the calculators work</a></p></section><div class="grid-two"><section class="card"><h2>What the site does</h2><p>Each calculator estimates your likely monthly gain or loss based on time saved, hourly value, and subscription price. Review pages add context so the numbers mean something in real life.</p></section><section class="card"><h2>Why it exists</h2><p>Too many software reviews quietly assume every tool is worth it. These pages are built to allow borderline or negative outcomes when the math does not support the subscription.</p></section></div><section class="card"><h2>Featured tools</h2><ul>{featured}</ul></section></main><footer class="site-footer"><div class="container"><ul class="footer-links"><li><a href="/about/">About</a></li><li><a href="/contact/">Contact</a></li><li><a href="/privacy/">Privacy</a></li><li><a href="/disclosure/">Disclosure</a></li><li><a href="/methodology/">Methodology</a></li></ul><p class="small">&copy; 2026 AI Productivity Calculators. All rights reserved.</p></div></footer></body></html>'
+def generate_homepage(tools_list, comparisons):
+    featured_tools = tools_list[:5]
+    featured_reviews = tools_list[:5]
+    featured_comparisons = comparisons[:5]
+    tool_items = "\n      ".join(
+        f'<li><a href="/tools/{t["slug"]}-worth-it-calculator/">{html.escape(t["name"])} Calculator</a></li>'
+        for t in featured_tools
+    )
+    review_items = "\n      ".join(
+        f'<li><a href="/pages/{t["slug"]}-review/">{html.escape(t["name"])} Review</a></li>'
+        for t in featured_reviews
+    )
+    comparison_items = "\n      ".join(
+        f'<li><a href="/compare/{c["slug"]}/">{html.escape(c["slug"].replace("-", " ").title())}</a></li>'
+        for c in featured_comparisons
+    )
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Productivity Calculators</title>
+  <meta name="description" content="Free calculators, reviews, and comparisons to help you decide whether AI productivity tools are worth the money.">
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1><a href="/">AI Productivity Calculators</a></h1>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/tools/">Tools</a>
+        <a href="/about/">About</a>
+        <a href="/methodology/">Methodology</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>Find Out If an AI Tool Actually Pays for Itself</h1>
+    <p>This site helps freelancers, creators, and small teams estimate whether popular AI tools are actually worth the monthly cost.</p>
+
+    <h2>How It Works</h2>
+    <p>Each calculator combines a tool's current price with your own hourly value and estimated time savings. Instead of relying on hype, you can run the numbers for your real workflow.</p>
+    <p><a href="/methodology/">Read the methodology</a></p>
+
+    <h2>Featured Calculators</h2>
+    <ul>
+      {tool_items}
+    </ul>
+
+    <h2>Featured Reviews</h2>
+    <ul>
+      {review_items}
+    </ul>
+
+    <h2>Featured Comparisons</h2>
+    <ul>
+      {comparison_items}
+    </ul>
+  </main>
+
+  <footer>
+    <div class="container">
+      <ul>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/contact/">Contact</a></li>
+        <li><a href="/privacy/">Privacy</a></li>
+        <li><a href="/disclosure/">Disclosure</a></li>
+        <li><a href="/methodology/">Methodology</a></li>
+      </ul>
+      <p>© 2026 AI Productivity Calculators. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
+"""
 
 
-def generate_sitemap(tools_list):
+def generate_sitemap(tools_list, comparisons=None):
     now = datetime.date.today().isoformat()
-    urls = [{"loc": f"{ROOT_URL}/", "lastmod": now, "priority": "1.0"}, {"loc": f"{ROOT_URL}/tools/", "lastmod": now, "priority": "0.9"}]
+    urls = [
+        {"loc": f"{ROOT_URL}/", "lastmod": now, "priority": "1.0"},
+        {"loc": f"{ROOT_URL}/tools/", "lastmod": now, "priority": "0.9"},
+    ]
     for tool in tools_list:
         urls.append({"loc": f'{ROOT_URL}/tools/{tool["slug"]}-worth-it-calculator/', "lastmod": now, "priority": "0.8"})
-    for tool in tools_list:
         urls.append({"loc": f'{ROOT_URL}/pages/{tool["slug"]}-review/', "lastmod": now, "priority": "0.7"})
-    out = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    if comparisons:
+        for comp in comparisons:
+            urls.append({"loc": f'{ROOT_URL}/compare/{comp["slug"]}/', "lastmod": now, "priority": "0.75"})
+    sitemap = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for entry in urls:
-        out.extend(["  <url>", f'    <loc>{html.escape(entry["loc"])}</loc>', f'    <lastmod>{entry["lastmod"]}</lastmod>', f'    <priority>{entry["priority"]}</priority>', "  </url>"])
-    out.append("</urlset>")
-    return "\n".join(out) + "\n"
+        sitemap.append("  <url>")
+        sitemap.append(f'    <loc>{html.escape(entry["loc"])}</loc>')
+        sitemap.append(f'    <lastmod>{entry["lastmod"]}</lastmod>')
+        sitemap.append(f'    <priority>{entry["priority"]}</priority>')
+        sitemap.append("  </url>")
+    sitemap.append("</urlset>")
+    return "\n".join(sitemap) + "\n"
 
 
 def main():
     root = project_root()
-    tools_list = [t for t in load_tools() if validate_tool(t)[0]]
+    tools_list = load_tools()
+    comparisons = load_comparisons()
     template = load_template()
+
+    valid_tools = []
+    seen_slugs = set()
+    for tool in tools_list:
+        valid, error = validate_tool(tool)
+        if not valid:
+            print(f"Skipped invalid tool '{tool.get('name', 'unknown')}': {error}")
+            continue
+        if tool["slug"] in seen_slugs:
+            print(f"Skipped duplicate slug '{tool['slug']}'")
+            continue
+        seen_slugs.add(tool["slug"])
+        valid_tools.append(tool)
+
     tools_dir = root / "tools"
     tools_dir.mkdir(parents=True, exist_ok=True)
-    for tool in tools_list:
+    for tool in valid_tools:
         calc_dir = tools_dir / f'{tool["slug"]}-worth-it-calculator'
         calc_dir.mkdir(parents=True, exist_ok=True)
-        (calc_dir / "index.html").write_text(generate_calculator_page(tool, tools_list, template), encoding="utf-8")
-    (tools_dir / "index.html").write_text(generate_hub_page(tools_list), encoding="utf-8")
-    (root / "index.html").write_text(generate_homepage(tools_list), encoding="utf-8")
-    (root / "sitemap.xml").write_text(generate_sitemap(tools_list), encoding="utf-8")
-    print(f"Generated {len(tools_list)} calculator pages.")
+        content = generate_calculator_page(tool, valid_tools, template)
+        (calc_dir / "index.html").write_text(content, encoding="utf-8")
+
+    (tools_dir / "index.html").write_text(generate_hub_page(valid_tools), encoding="utf-8")
+    (root / "index.html").write_text(generate_homepage(valid_tools, comparisons), encoding="utf-8")
+    (root / "sitemap.xml").write_text(generate_sitemap(valid_tools, comparisons), encoding="utf-8")
+    print(f"Generated {len(valid_tools)} calculator pages.")
+
 
 if __name__ == "__main__":
     main()
