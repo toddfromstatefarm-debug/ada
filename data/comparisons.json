@@ -8,7 +8,9 @@
     "intro": "ChatGPT and Claude are both frontier language models, but they diverge in priorities: ChatGPT emphasizes speed, multimodality, and broad ecosystem access, while Claude focuses on long-context reasoning, safety, and depth over flash.",
     "verdict": "Claude usually edges out when you need careful, step-by-step reasoning or work with very long documents. ChatGPT pulls ahead for creative generation, image tasks, or when you want faster responses and more integrations. For most everyday users, ChatGPT still wins on versatility and cost-to-capability ratio.",
     "best_for": "Claude suits developers, analysts, and writers who regularly push large context windows or need lower hallucination risk. ChatGPT suits creators, casual users, and anyone needing quick multimodal help or broad plugin support.",
-    "when_to_choose": "Choose Claude if your work involves long documents, complex analysis, or high-stakes accuracy. Choose ChatGPT if you value speed, image generation, custom GPTs, or a larger ecosystem. The $20/mo price is roughly the same — the decision comes down to workflow fit, not budget."
+    "when_to_choose": "Choose Claude if your work involves long documents, complex analysis, or high-stakes accuracy. Choose ChatGPT if you value speed, image generation, custom GPTs, or a larger ecosystem. The $20/mo price is roughly the same — the decision comes down to workflow fit, not budget.",
+    "regret_risk": "You are most likely to regret Claude if you rarely need long context or deep reasoning and just want fast, fun, or visual outputs — you'll feel like you're paying for unused depth. You are most likely to regret ChatGPT if your work demands precision over speed and you keep catching hallucinations or shallow answers — you'll feel the speed came at the cost of reliability.",
+    "overbuying_note": "You're overbuying Claude if your typical prompt is short and creative. You're overbuying ChatGPT if you never use image generation or plugins and only care about reasoning quality."
   },
   {
     "slug": "motion-vs-reclaim-ai",
@@ -18,7 +20,9 @@
     "intro": "Motion aggressively auto-schedules your entire day around tasks and priorities, while Reclaim.ai takes a more protective approach, focusing on defending focus blocks and habits against calendar chaos.",
     "verdict": "Motion is usually the stronger choice when your week feels like constant firefighting and you want the system to take over planning entirely. Reclaim.ai wins when your main pain is losing deep work to meetings and interruptions, and you prefer lighter-touch calendar defense over full automation.",
     "best_for": "Motion fits people whose calendars break constantly and who want tasks turned into blocks automatically. Reclaim fits users who already have decent task management but need better protection for focus time and recurring habits.",
-    "when_to_choose": "Pick Motion if reshuffling tasks and deadlines is your biggest daily tax. Pick Reclaim if your biggest loss is focus time being nibbled away by meetings and poor boundaries. Motion costs more (~$19 vs ~$8), so Reclaim often feels like better value for lighter needs."
+    "when_to_choose": "Pick Motion if reshuffling tasks and deadlines is your biggest daily tax. Pick Reclaim if your biggest loss is focus time being nibbled away by meetings and poor boundaries. Motion costs more (~$19 vs ~$8), so Reclaim often feels like better value for lighter needs.",
+    "regret_risk": "You are most likely to regret Motion if your schedule is already stable or you hate feeling like the tool is deciding your day — you'll churn because it feels controlling. You are most likely to regret Reclaim if your day keeps collapsing under task overload — you'll feel it didn't go far enough to actually fix the chaos.",
+    "overbuying_note": "You're overbuying Motion if your calendar is predictable and you just need habit protection. You're overbuying Reclaim if your task list is massive and constantly shifting — the lower price won't matter if the day still falls apart."
   },
   {
     "slug": "otter-ai-vs-fireflies-ai",
@@ -28,6 +32,32 @@
     "intro": "Otter.ai excels at personal, high-accuracy transcription and searchable notes for individuals, while Fireflies.ai leans into team workflows, shared summaries, and CRM integrations for collaborative environments.",
     "verdict": "Otter.ai is typically the better pick for solo users, journalists, students, or anyone who wants fast, reliable personal meeting notes. Fireflies becomes more compelling when meetings stop being private notes and start becoming team assets that need distribution, action routing, or CRM sync.",
     "best_for": "Otter suits individual heavy call users who value simplicity and accuracy. Fireflies suits sales teams, agencies, and companies that treat meeting content as shared knowledge requiring collaboration and integrations.",
-    "when_to_choose": "Choose Otter if most of your calls are personal or one-on-one and you want clean, searchable notes without team overhead. Choose Fireflies if your meetings feed into team processes, CRM updates, or shared follow-ups. Both are ~$10/mo — the decision is workflow fit, not price."
+    "when_to_choose": "Choose Otter if most of your calls are personal or one-on-one and you want clean, searchable notes without team overhead. Choose Fireflies if your meetings feed into team processes, CRM updates, or shared follow-ups. Both are ~$10/mo — the decision is workflow fit, not price.",
+    "regret_risk": "You are most likely to regret Otter if your meetings are highly collaborative and you need team sharing or CRM sync — you'll feel isolated without distribution. You are most likely to regret Fireflies if you're a solo user — you'll feel the enterprise features are wasted and the interface is heavier than necessary.",
+    "overbuying_note": "You're overbuying Fireflies if your calls are mostly personal notes and don't need team routing. You're overbuying Otter if your meetings are team assets and you keep wishing for better sharing and integrations."
+  },
+  {
+    "slug": "notion-ai-vs-clickup-ai",
+    "tool_a_slug": "notion-ai",
+    "tool_b_slug": "clickup-ai",
+    "category": "ai-productivity",
+    "intro": "Notion AI adds lightweight writing and summarization directly into Notion docs and databases, while ClickUp AI layers task generation, summaries, and automation inside a project-management-first system.",
+    "verdict": "Notion AI is the smarter buy if most of your work already lives in Notion and you want frictionless in-context help. ClickUp AI pulls ahead if you're deep in ClickUp and need AI tied to tasks, projects, and execution rather than docs. Neither is automatically better if you're not already committed to that ecosystem — you'll pay for convenience you don't fully use.",
+    "best_for": "Notion AI fits heavy Notion users who want summarization and writing inside docs without switching apps. ClickUp AI fits ClickUp users who want AI help with task creation, prioritization, and project follow-through.",
+    "when_to_choose": "Choose Notion AI if your bottleneck is organizing thoughts and knowledge inside Notion. Choose ClickUp AI if your bottleneck is turning ideas into actionable tasks and projects. The real question is which platform you're already paying for and living in — adding AI to the wrong one often feels like fake savings.",
+    "regret_risk": "You are most likely to regret Notion AI if you rarely work in docs and expected frontier-model depth — you'll feel it's underpowered. You are most likely to regret ClickUp AI if you're not already using ClickUp heavily — you'll feel you're paying for features in a system you don't use.",
+    "overbuying_note": "You're overbuying Notion AI if your work is mostly task-driven and not doc-heavy. You're overbuying ClickUp AI if your work is knowledge and writing-focused rather than project execution."
+  },
+  {
+    "slug": "jasper-vs-writesonic",
+    "tool_a_slug": "jasper",
+    "tool_b_slug": "writesonic",
+    "category": "ai-writing",
+    "intro": "Jasper is built for consistent branded marketing content at scale, while Writesonic focuses on fast, SEO-friendly copy for blogs, ads, and product descriptions at a lower price point.",
+    "verdict": "Jasper is worth the premium only if brand voice consistency and team collaboration are non-negotiable for high-volume marketing. Writesonic wins on value for solo creators or smaller teams who need quick copy without heavy governance — but both still require editing, so the real question is whose editing burden you can tolerate.",
+    "best_for": "Jasper suits marketing teams and agencies producing large volumes of on-brand content. Writesonic suits e-commerce sellers, bloggers, and solo marketers who want fast drafts and SEO tools without overpaying for team features.",
+    "when_to_choose": "Choose Jasper if consistent brand voice and team workflows are your bottleneck. Choose Writesonic if speed, affordability, and SEO are more important than polish or collaboration. Jasper costs more (~$49 vs ~$20), so Writesonic often feels like the smarter default unless brand control is critical.",
+    "regret_risk": "You are most likely to regret Jasper if you're a solo creator who doesn't need brand governance — you'll feel the price is unjustified for what ends up as editable drafts. You are most likely to regret Writesonic if your output needs tight brand consistency or team review — you'll churn because the polish isn't there.",
+    "overbuying_note": "You're overbuying Jasper if you're not producing high-volume branded content. You're overbuying Writesonic if you keep spending more time editing generic output than you save on generation."
   }
 ]

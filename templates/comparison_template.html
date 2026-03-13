@@ -39,6 +39,13 @@
             margin-right: 0.5rem;
             margin-bottom: 0.75rem;
         }
+        .regret-box {
+            background: #fff8e1;
+            border: 1px solid #ffe082;
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
         @media (max-width: 768px) {
             .comparison-grid {
                 grid-template-columns: 1fr;
@@ -105,6 +112,16 @@
         <section class="card">
             <h2>When to Choose One Over the Other</h2>
             <p>{when_to_choose}</p>
+        </section>
+
+        <section class="regret-box">
+            <h2>Who Is Most Likely to Regret This Choice?</h2>
+            <p>{regret_risk}</p>
+        </section>
+
+        <section class="card">
+            <h2>Overbuying Warning</h2>
+            <p>{overbuying_note}</p>
         </section>
 
         <section class="card">

@@ -29,7 +29,7 @@ def load_comparisons():
         return json.load(f)
 
 def validate_comparison(comp, tools_by_slug):
-    required = ["slug", "tool_a_slug", "tool_b_slug", "intro", "verdict", "best_for", "when_to_choose"]
+    required = ["slug", "tool_a_slug", "tool_b_slug", "intro", "verdict", "best_for", "when_to_choose", "regret_risk", "overbuying_note"]
     missing = [k for k in required if k not in comp or (isinstance(comp[k], str) and not comp[k].strip())]
     if missing:
         return False, f"Missing fields: {', '.join(missing)}"
@@ -79,7 +79,7 @@ def render_comparison_page(comp, tools_list, template):
         return None
 
     title = f"{tool_a['name']} vs {tool_b['name']} ({now.year}) – Which Actually Saves More Time?"
-    meta_description = f"Decisive {tool_a['name']} vs {tool_b['name']} comparison: pricing, real workflow fit, time savings, and who should pick which."
+    meta_description = f"Decisive {tool_a['name']} vs {tool_b['name']} comparison: pricing, real workflow fit, time savings, regret risks, and who should pick which."
 
     h1 = f"{tool_a['name']} vs {tool_b['name']}"
 
@@ -100,6 +100,8 @@ def render_comparison_page(comp, tools_list, template):
         verdict=html.escape(comp["verdict"]),
         best_for=html.escape(comp["best_for"]),
         when_to_choose=html.escape(comp["when_to_choose"]),
+        regret_risk=html.escape(comp["regret_risk"]),
+        overbuying_note=html.escape(comp["overbuying_note"]),
         related_links=build_related_links(tools_list, comp["tool_a_slug"], comp["tool_b_slug"]),
         stylesheet_url=internal_url("/assets/styles.css"),
         home_url=internal_url("/"),
