@@ -1,4 +1,4 @@
-## templates/review_template.html
+<!-- templates/review_template.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,6 +28,19 @@
       <p>{review_summary}</p>
     </section>
 
+    <section class="card verdict">
+      <h2>Quick Verdict</h2>
+      <p><strong>{quick_verdict}</strong></p>
+      <div class="verdict-grid">
+        <div>
+          <strong>Biggest strength:</strong> {biggest_strength}
+        </div>
+        <div>
+          <strong>Biggest weakness:</strong> {biggest_weakness}
+        </div>
+      </div>
+    </section>
+
     <div class="grid-two">
       <section class="card">
         <h2>Best for</h2>
@@ -38,6 +51,25 @@
         <p>{not_ideal_for}</p>
       </section>
     </div>
+
+    <section class="card">
+      <h2>What users tend to like and complain about</h2>
+      <div class="grid-two">
+        <div>
+          <h3>Common praise</h3>
+          <ul>{common_praise}</ul>
+        </div>
+        <div>
+          <h3>Common complaints</h3>
+          <ul>{common_complaints}</ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>In a real workday</h2>
+      <p>{real_world_fit}</p>
+    </section>
 
     <section class="card">
       <h2>Key features</h2>
@@ -62,14 +94,12 @@
 
     <section class="card">
       <h2>Should you buy it?</h2>
-      <p>Run your own scenario instead of relying on generic claims. The calculator is the fastest way to test whether the tool pays for itself in your actual workflow.</p>
-      <a href="{calculator_path}" class="button secondary">Open {tool_name} Calculator</a>
-    </section>
-
-    <section class="card">
-      <h2>Try it</h2>
-      <a href="{affiliate_link}" class="button">Try {tool_name}</a>
-      <p class="disclosure">This article may contain affiliate links. If you buy through them, the site may earn a commission at no extra cost to you. <a href="{disclosure_url}">Disclosure</a>.</p>
+      <p>If this tool aligns with how you actually work, the next step is usually to try it and see how it feels in your real routine.</p>
+      <p>If you're still weighing options, look at similar tools in the same category or run a quick scenario in the calculator for a time-value gut check.</p>
+      <div class="button-group">
+        <a href="{affiliate_link}" class="button primary">Try {tool_name}</a>
+        <a href="{calculator_path}" class="button secondary">Open {tool_name} Calculator</a>
+      </div>
     </section>
 
     <section class="card">
@@ -87,7 +117,7 @@
         <li><a href="{disclosure_url}">Disclosure</a></li>
         <li><a href="{methodology_url}">Methodology</a></li>
       </ul>
-      <p class="small">&copy; 2026 AI Productivity Calculators. All rights reserved.</p>
+      <p class="small">© 2026 AI Productivity Calculators. All rights reserved.</p>
     </div>
   </footer>
 </body>
