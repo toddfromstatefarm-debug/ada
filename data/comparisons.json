@@ -1,52 +1,33 @@
+## data/comparisons.json
 [
+  {
+    "slug": "chatgpt-vs-claude",
+    "tool_a_slug": "chatgpt",
+    "tool_b_slug": "claude",
+    "category": "ai-writing",
+    "intro": "ChatGPT and Claude are both frontier language models, but they diverge in priorities: ChatGPT emphasizes speed, multimodality, and broad ecosystem access, while Claude focuses on long-context reasoning, safety, and depth over flash.",
+    "verdict": "Claude usually edges out when you need careful, step-by-step reasoning or work with very long documents. ChatGPT pulls ahead for creative generation, image tasks, or when you want faster responses and more integrations. For most everyday users, ChatGPT still wins on versatility and cost-to-capability ratio.",
+    "best_for": "Claude suits developers, analysts, and writers who regularly push large context windows or need lower hallucination risk. ChatGPT suits creators, casual users, and anyone needing quick multimodal help or broad plugin support.",
+    "when_to_choose": "Choose Claude if your work involves long documents, complex analysis, or high-stakes accuracy. Choose ChatGPT if you value speed, image generation, custom GPTs, or a larger ecosystem. The $20/mo price is roughly the same — the decision comes down to workflow fit, not budget."
+  },
   {
     "slug": "motion-vs-reclaim-ai",
     "tool_a_slug": "motion",
     "tool_b_slug": "reclaim-ai",
     "category": "ai-scheduling",
-    "intro": "Motion and Reclaim.ai both use AI to manage your calendar, but they solve different problems: Motion pushes harder on full scheduling automation, while Reclaim.ai focuses on protecting deep work and habits.",
-    "verdict": "Motion is usually the stronger choice for users whose calendars are chaotic and task-heavy. Reclaim.ai is better for professionals who mainly want focus time, habit blocks, and lighter-touch scheduling help.",
-    "best_for": "Choose Motion for aggressive task-to-calendar automation. Choose Reclaim.ai for calmer calendar management and better focus-time defense.",
-    "when_to_choose": "Pick Motion if you constantly reshuffle tasks and deadlines. Pick Reclaim.ai if your main pain point is losing deep work time to meetings and interruptions."
+    "intro": "Motion aggressively auto-schedules your entire day around tasks and priorities, while Reclaim.ai takes a more protective approach, focusing on defending focus blocks and habits against calendar chaos.",
+    "verdict": "Motion is usually the stronger choice when your week feels like constant firefighting and you want the system to take over planning entirely. Reclaim.ai wins when your main pain is losing deep work to meetings and interruptions, and you prefer lighter-touch calendar defense over full automation.",
+    "best_for": "Motion fits people whose calendars break constantly and who want tasks turned into blocks automatically. Reclaim fits users who already have decent task management but need better protection for focus time and recurring habits.",
+    "when_to_choose": "Pick Motion if reshuffling tasks and deadlines is your biggest daily tax. Pick Reclaim if your biggest loss is focus time being nibbled away by meetings and poor boundaries. Motion costs more (~$19 vs ~$8), so Reclaim often feels like better value for lighter needs."
   },
   {
     "slug": "otter-ai-vs-fireflies-ai",
     "tool_a_slug": "otter-ai",
     "tool_b_slug": "fireflies-ai",
     "category": "ai-meeting",
-    "intro": "Otter.ai and Fireflies.ai both capture meetings, generate transcripts, and summarize calls, but Otter skews more toward individual users while Fireflies leans harder into team workflows and integrations.",
-    "verdict": "Otter.ai is usually the cleaner pick for solo professionals, students, and individual note-takers. Fireflies.ai becomes more compelling when a team needs shared notes, action items, and CRM-friendly meeting workflows.",
-    "best_for": "Choose Otter.ai for personal note capture and searchable transcripts. Choose Fireflies.ai for team collaboration and shared meeting intelligence.",
-    "when_to_choose": "Pick Otter.ai if you mainly want reliable transcription and easy note search. Pick Fireflies.ai if your team wants meeting summaries distributed across tools and workflows."
-  },
-  {
-    "slug": "jasper-vs-writesonic",
-    "tool_a_slug": "jasper",
-    "tool_b_slug": "writesonic",
-    "category": "ai-writing",
-    "intro": "Jasper and Writesonic are both content-focused AI writing tools, but Jasper is stronger around brand control and marketing workflows, while Writesonic is often the cheaper, faster option for broad content production.",
-    "verdict": "Jasper tends to win for teams that care deeply about brand voice and structured marketing output. Writesonic is often the better value for leaner users who want strong AI writing help without Jasper-level pricing.",
-    "best_for": "Choose Jasper for high-volume branded marketing content. Choose Writesonic for cost-conscious creators who still need capable AI writing and SEO support.",
-    "when_to_choose": "Pick Jasper if your biggest bottleneck is consistent brand messaging across lots of content. Pick Writesonic if you want more affordability and speed for day-to-day content generation."
-  },
-  {
-    "slug": "notion-ai-vs-clickup-ai",
-    "tool_a_slug": "notion-ai",
-    "tool_b_slug": "clickup-ai",
-    "category": "ai-productivity",
-    "intro": "Notion AI and ClickUp AI both embed AI into existing workspaces, but Notion AI fits document-heavy knowledge work while ClickUp AI is more aligned with tasks, projects, and execution workflows.",
-    "verdict": "Notion AI is usually the better pick for users living inside documents, notes, and internal knowledge bases. ClickUp AI is stronger when your work revolves around tasks, project coordination, and operational follow-through.",
-    "best_for": "Choose Notion AI for writing, note summarization, and knowledge management. Choose ClickUp AI for project execution, task workflows, and operational productivity.",
-    "when_to_choose": "Pick Notion AI if most of your work happens inside docs and databases. Pick ClickUp AI if you need AI support layered into a task-first project management system."
-  },
-  {
-    "slug": "todoist-ai-vs-sunsama",
-    "tool_a_slug": "todoist-ai",
-    "tool_b_slug": "sunsama",
-    "category": "ai-productivity",
-    "intro": "Todoist AI and Sunsama both help organize work, but Todoist AI is lighter, simpler, and list-driven, while Sunsama is more deliberate and day-planning oriented.",
-    "verdict": "Todoist AI is the better fit for people who want a lightweight daily task system with some AI assistance. Sunsama is better for users who want a more intentional daily planning ritual tied closely to calendars and workload balancing.",
-    "best_for": "Choose Todoist AI for simplicity and lightweight task management. Choose Sunsama for structured daily planning and a calmer end-to-end workday workflow.",
-    "when_to_choose": "Pick Todoist AI if you want quick capture and prioritization without much overhead. Pick Sunsama if you want to actively shape each day around realistic workloads and calendar constraints."
+    "intro": "Otter.ai excels at personal, high-accuracy transcription and searchable notes for individuals, while Fireflies.ai leans into team workflows, shared summaries, and CRM integrations for collaborative environments.",
+    "verdict": "Otter.ai is typically the better pick for solo users, journalists, students, or anyone who wants fast, reliable personal meeting notes. Fireflies becomes more compelling when meetings stop being private notes and start becoming team assets that need distribution, action routing, or CRM sync.",
+    "best_for": "Otter suits individual heavy call users who value simplicity and accuracy. Fireflies suits sales teams, agencies, and companies that treat meeting content as shared knowledge requiring collaboration and integrations.",
+    "when_to_choose": "Choose Otter if most of your calls are personal or one-on-one and you want clean, searchable notes without team overhead. Choose Fireflies if your meetings feed into team processes, CRM updates, or shared follow-ups. Both are ~$10/mo — the decision is workflow fit, not price."
   }
 ]

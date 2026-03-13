@@ -1,3 +1,4 @@
+## templates/review_template.html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,17 +9,86 @@
   <link rel="stylesheet" href="{stylesheet_url}">
 </head>
 <body>
-  <header class="site-header"><div class="container header-inner"><a class="brand" href="{home_url}">AI Productivity Calculators</a><nav class="site-nav"><a href="{home_url}">Home</a><a href="{tools_url}">Tools</a><a href="{about_url}">About</a><a href="{methodology_url}">Methodology</a></nav></div></header>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="{home_url}">AI Productivity Calculators</a>
+      <nav class="site-nav">
+        <a href="{home_url}">Home</a>
+        <a href="{tools_url}">Tools</a>
+        <a href="{about_url}">About</a>
+        <a href="{methodology_url}">Methodology</a>
+      </nav>
+    </div>
+  </header>
+
   <main class="container">
-    <section class="hero"><p class="last-updated">Last updated: {last_updated}</p><h1>{h1}</h1><p>{review_summary}</p></section>
-    <div class="grid-two"><section class="card"><h2>Best for</h2><p>{best_for}</p></section><section class="card"><h2>Not ideal for</h2><p>{not_ideal_for}</p></section></div>
-    <section class="card"><h2>Key features</h2><ul>{features}</ul></section>
-    <div class="grid-two"><section class="card"><h2>Pros</h2><ul>{pros}</ul></section><section class="card"><h2>Cons</h2><ul>{cons}</ul></section></div>
-    <section class="card"><h2>Pricing snapshot</h2><p><strong>Monthly price:</strong> ${monthly_price}</p><p class="table-note">{pricing_note}</p></section>
-    <section class="card"><h2>See the numbers</h2><p>Run your own scenario instead of relying on generic claims. The calculator is the fastest way to test whether the tool pays for itself in your actual workflow.</p><a href="{calculator_path}" class="button secondary">Open {tool_name} Calculator</a></section>
-    <section class="card"><h2>Try it</h2><a href="{affiliate_link}" class="button">Try {tool_name}</a><p class="disclosure">This article may contain affiliate links. If you buy through them, the site may earn a commission at no extra cost to you. <a href="{disclosure_url}">Disclosure</a>.</p></section>
-    <section class="card"><h2>Related tools</h2><ul>{related_tools}</ul></section>
+    <section class="hero">
+      <p class="last-updated">Last updated: {last_updated}</p>
+      <h1>{h1}</h1>
+      <p>{review_summary}</p>
+    </section>
+
+    <div class="grid-two">
+      <section class="card">
+        <h2>Best for</h2>
+        <p>{best_for}</p>
+      </section>
+      <section class="card">
+        <h2>Not ideal for</h2>
+        <p>{not_ideal_for}</p>
+      </section>
+    </div>
+
+    <section class="card">
+      <h2>Key features</h2>
+      <ul>{features}</ul>
+    </section>
+
+    <div class="grid-two">
+      <section class="card">
+        <h2>Pros</h2>
+        <ul>{pros}</ul>
+      </section>
+      <section class="card">
+        <h2>Cons</h2>
+        <ul>{cons}</ul>
+      </section>
+    </div>
+
+    <section class="card">
+      <h2>Pricing snapshot</h2>
+      <p>Monthly: ${monthly_price} {pricing_note}</p>
+    </section>
+
+    <section class="card">
+      <h2>Should you buy it?</h2>
+      <p>Run your own scenario instead of relying on generic claims. The calculator is the fastest way to test whether the tool pays for itself in your actual workflow.</p>
+      <a href="{calculator_path}" class="button secondary">Open {tool_name} Calculator</a>
+    </section>
+
+    <section class="card">
+      <h2>Try it</h2>
+      <a href="{affiliate_link}" class="button">Try {tool_name}</a>
+      <p class="disclosure">This article may contain affiliate links. If you buy through them, the site may earn a commission at no extra cost to you. <a href="{disclosure_url}">Disclosure</a>.</p>
+    </section>
+
+    <section class="card">
+      <h2>Related tools</h2>
+      <ul>{related_tools}</ul>
+    </section>
   </main>
-  <footer class="site-footer"><div class="container"><ul class="footer-links"><li><a href="{about_url}">About</a></li><li><a href="{contact_url}">Contact</a></li><li><a href="{privacy_url}">Privacy</a></li><li><a href="{disclosure_url}">Disclosure</a></li><li><a href="{methodology_url}">Methodology</a></li></ul><p class="small">&copy; 2026 AI Productivity Calculators. All rights reserved.</p></div></footer>
+
+  <footer class="site-footer">
+    <div class="container">
+      <ul class="footer-links">
+        <li><a href="{about_url}">About</a></li>
+        <li><a href="{contact_url}">Contact</a></li>
+        <li><a href="{privacy_url}">Privacy</a></li>
+        <li><a href="{disclosure_url}">Disclosure</a></li>
+        <li><a href="{methodology_url}">Methodology</a></li>
+      </ul>
+      <p class="small">&copy; 2026 AI Productivity Calculators. All rights reserved.</p>
+    </div>
+  </footer>
 </body>
 </html>

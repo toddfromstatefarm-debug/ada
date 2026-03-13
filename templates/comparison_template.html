@@ -1,3 +1,4 @@
+## templates/comparison_template.html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,45 +8,53 @@
     <meta name="description" content="{meta_description}">
     <link rel="stylesheet" href="{stylesheet_url}">
     <style>
-        .comparison-grid {{
+        .comparison-grid {
             display: grid;
             grid-template-columns: 1fr auto 1fr;
             gap: 2rem;
             margin: 2rem 0;
             align-items: stretch;
-        }}
-        .tool-column {{
+        }
+        .tool-column {
             background: #f8f9fa;
             padding: 1.5rem;
             border-radius: 8px;
             border: 1px solid #eee;
-        }}
-        .tool-column h2 {{ margin-top: 0; }}
-        .vs {{
-            font-size: 2rem;
+        }
+        .tool-column h2 { margin-top: 0; }
+        .vs {
+            font-size: 2.2rem;
             font-weight: bold;
-            color: #666;
+            color: #555;
             align-self: center;
             text-align: center;
-        }}
-        .comparison-actions {{ margin-top: 1rem; }}
-        .comparison-actions .cta-button {{ margin-right: 0.5rem; margin-bottom: 0.75rem; }}
-        @media (max-width: 768px) {{
-            .comparison-grid {{
+        }
+        .comparison-actions {
+            margin-top: 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+        .comparison-actions .cta-button {
+            margin-right: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+        @media (max-width: 768px) {
+            .comparison-grid {
                 grid-template-columns: 1fr;
-            }}
-            .vs {{
+            }
+            .vs {
                 order: -1;
-                margin: 1rem 0;
-            }}
-        }}
+                margin: 1.5rem 0;
+            }
+        }
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1><a href="{home_url}">AI Productivity Calculators</a></h1>
-            <nav>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a class="brand" href="{home_url}">AI Productivity Calculators</a>
+            <nav class="site-nav">
                 <a href="{home_url}">Home</a>
                 <a href="{tools_url}">Tools</a>
                 <a href="{about_url}">About</a>
@@ -55,10 +64,11 @@
     </header>
 
     <main class="container">
-        <h1>{h1}</h1>
-        <p class="last-updated">Last updated: {last_updated}</p>
-
-        <p class="intro">{intro}</p>
+        <section class="hero">
+            <p class="last-updated">Last updated: {last_updated}</p>
+            <h1>{h1}</h1>
+            <p>{intro}</p>
+        </section>
 
         <div class="comparison-grid">
             <div class="tool-column">
@@ -66,7 +76,7 @@
                 <ul>{tool_a_highlights}</ul>
                 <div class="comparison-actions">
                     <a href="{tool_a_calculator_path}" class="cta-button">Calculate {tool_a_name} ROI</a>
-                    <a href="{tool_a_affiliate_link}" class="cta-button">Try {tool_a_name}</a>
+                    <a href="{tool_a_affiliate_link}" class="cta-button secondary">Try {tool_a_name}</a>
                 </div>
             </div>
 
@@ -77,36 +87,44 @@
                 <ul>{tool_b_highlights}</ul>
                 <div class="comparison-actions">
                     <a href="{tool_b_calculator_path}" class="cta-button">Calculate {tool_b_name} ROI</a>
-                    <a href="{tool_b_affiliate_link}" class="cta-button">Try {tool_b_name}</a>
+                    <a href="{tool_b_affiliate_link}" class="cta-button secondary">Try {tool_b_name}</a>
                 </div>
             </div>
         </div>
 
-        <h2>Quick Verdict</h2>
-        <p>{verdict}</p>
+        <section class="card">
+            <h2>Quick Verdict</h2>
+            <p>{verdict}</p>
+        </section>
 
-        <h2>Best For</h2>
-        <p>{best_for}</p>
+        <section class="card">
+            <h2>Best For</h2>
+            <p>{best_for}</p>
+        </section>
 
-        <h2>When to Choose One Over the Other</h2>
-        <p>{when_to_choose}</p>
+        <section class="card">
+            <h2>When to Choose One Over the Other</h2>
+            <p>{when_to_choose}</p>
+        </section>
 
-        <h2>Related Calculators</h2>
-        <ul>{related_links}</ul>
+        <section class="card">
+            <h2>Related Calculators</h2>
+            <ul>{related_links}</ul>
+        </section>
 
         <p class="disclosure">Affiliate links may earn commission at no extra cost to you. <a href="{disclosure_url}">Full disclosure</a>.</p>
     </main>
 
-    <footer>
+    <footer class="site-footer">
         <div class="container">
-            <ul>
+            <ul class="footer-links">
                 <li><a href="{about_url}">About</a></li>
                 <li><a href="{contact_url}">Contact</a></li>
                 <li><a href="{privacy_url}">Privacy</a></li>
                 <li><a href="{disclosure_url}">Disclosure</a></li>
                 <li><a href="{methodology_url}">Methodology</a></li>
             </ul>
-            <p>© 2026 AI Productivity Calculators. All rights reserved.</p>
+            <p class="small">© 2026 AI Productivity Calculators. All rights reserved.</p>
         </div>
     </footer>
 </body>
