@@ -1,0 +1,282 @@
+[
+  {
+    "name": "Reclaim.ai",
+    "slug": "reclaim-ai",
+    "monthly_price": 15,
+    "default_hours_saved": 5,
+    "affiliate_link": "https://affiliate.example.com/reclaim-ai?ref=yourid",
+    "short_summary": "Auto-schedules your day to block distractions and reclaim hours.",
+    "category": "ai-scheduling",
+    "features": [
+      "Protects focus blocks on your calendar",
+      "Reschedules habits and routines automatically",
+      "Adds buffer time around meetings"
+    ],
+    "pros": [
+      "Excellent at preserving deep-work time",
+      "Good fit for freelancers with shifting schedules",
+      "More focus-friendly than heavier schedulers"
+    ],
+    "cons": [
+      "Less task-heavy than some competitors",
+      "Best when your calendar already has basic structure",
+      "Can feel conservative if you want aggressive automation"
+    ],
+    "best_for_override": "Freelancers and operators who want to protect focus time without handing over total control of their calendar.",
+    "not_ideal_for_override": "Users who want a heavy task-manager plus scheduler in one tool or who barely rely on calendar blocking.",
+    "pricing_note": "Pricing varies by plan. Check the official site for current free, paid, and team options.",
+    "review_summary": "Reclaim.ai stands out when the real problem is protecting time, not just stuffing more tasks into the calendar."
+  },
+  {
+    "name": "Motion",
+    "slug": "motion",
+    "monthly_price": 19,
+    "default_hours_saved": 4,
+    "affiliate_link": "https://affiliate.example.com/motion?ref=yourid",
+    "short_summary": "AI calendar that optimizes tasks for busy solopreneurs.",
+    "category": "ai-scheduling",
+    "features": [
+      "Auto-builds a daily schedule from your tasks",
+      "Reprioritizes work as deadlines shift",
+      "Combines task planning with calendar blocking"
+    ],
+    "pros": [
+      "Powerful for overloaded schedules",
+      "Can reduce manual planning time dramatically",
+      "Strong fit for deadline-heavy solo work"
+    ],
+    "cons": [
+      "Takes setup discipline to get right",
+      "Can feel opinionated if you like manual control",
+      "Price is harder to justify for light users"
+    ],
+    "best_for_override": "Consultants, founders, and busy freelancers who want the tool to actively plan their day for them.",
+    "not_ideal_for_override": "Users with very predictable routines or people who do not want software constantly rearranging their schedule.",
+    "pricing_note": "Plans and features can shift. Verify current personal and team pricing directly before deciding.",
+    "review_summary": "Motion is best when planning itself has become a tax on your week."
+  },
+  {
+    "name": "Notion AI",
+    "slug": "notion-ai",
+    "monthly_price": 8,
+    "default_hours_saved": 3,
+    "affiliate_link": "https://affiliate.example.com/notion-ai?ref=yourid",
+    "short_summary": "AI-powered note-taking and organization for creative workflows.",
+    "category": "ai-writing",
+    "features": [
+      "Works directly inside Notion pages",
+      "Summarizes notes and meeting content",
+      "Helps brainstorm, rewrite, and structure drafts"
+    ],
+    "pros": [
+      "Low friction if you already use Notion heavily",
+      "Useful for turning messy notes into structured output",
+      "Affordable compared with many standalone tools"
+    ],
+    "cons": [
+      "Less compelling if Notion is not already your workspace",
+      "Can feel limited compared with broader chat-based tools",
+      "Value depends on how often you work inside Notion"
+    ],
+    "best_for_override": "Writers, creators, and operators who already live inside Notion and want light AI help without switching tabs.",
+    "not_ideal_for_override": "People who do not use Notion regularly or who want a more powerful standalone writing assistant.",
+    "pricing_note": "Pricing depends on your Notion plan and AI add-on availability. Always verify current Notion pricing.",
+    "review_summary": "Notion AI is strongest as an in-workspace assistant, not as a giant all-purpose AI platform."
+  },
+  {
+    "name": "Jasper",
+    "slug": "jasper",
+    "monthly_price": 49,
+    "default_hours_saved": 6,
+    "affiliate_link": "https://affiliate.example.com/jasper?ref=yourid",
+    "short_summary": "AI content generator for marketing and writing tasks.",
+    "category": "ai-writing",
+    "features": [
+      "Built around marketing and campaign workflows",
+      "Supports brand voice guidance",
+      "Useful for blog, ad, and email drafts"
+    ],
+    "pros": [
+      "Clear fit for content teams and marketers",
+      "Can speed up repeatable marketing output",
+      "Better brand/process framing than many general tools"
+    ],
+    "cons": [
+      "Price is harder to justify for solo casual users",
+      "Less attractive if you only need occasional drafting",
+      "Requires editing to avoid bland output"
+    ],
+    "best_for_override": "Marketing teams, agencies, and businesses producing a steady stream of branded written content.",
+    "not_ideal_for_override": "Individuals who just want a cheaper general AI tool for occasional writing help.",
+    "pricing_note": "Jasper pricing changes by plan and team size. Check current creator and business tiers before subscribing.",
+    "review_summary": "Jasper makes the most sense when AI writing is part of a repeatable marketing process."
+  },
+  {
+    "name": "ClickUp AI",
+    "slug": "clickup-ai",
+    "monthly_price": 5,
+    "default_hours_saved": 4,
+    "affiliate_link": "https://affiliate.example.com/clickup-ai?ref=yourid",
+    "short_summary": "Task management with AI automation for team productivity.",
+    "category": "ai-productivity",
+    "features": [
+      "Assists with task writing and summarization",
+      "Helps automate repetitive project admin",
+      "Works inside a broader project management system"
+    ],
+    "pros": [
+      "Cheap relative to many AI add-ons",
+      "Useful if your team already runs on ClickUp",
+      "Can reduce repetitive project-management overhead"
+    ],
+    "cons": [
+      "Value drops fast if you do not use ClickUp consistently",
+      "Still tied to the complexity of the wider platform",
+      "Not a standalone productivity solution"
+    ],
+    "best_for_override": "Teams and managers already operating inside ClickUp who want to cut down repetitive project admin.",
+    "not_ideal_for_override": "Users who do not already like ClickUp or who want a simple standalone AI productivity tool.",
+    "pricing_note": "AI pricing may depend on your ClickUp plan and workspace setup. Confirm current add-on details before buying.",
+    "review_summary": "ClickUp AI is a leverage add-on, not a magic fix. It pays off when the underlying ClickUp workflow is already active and valuable."
+  },
+  {
+    "name": "Todoist AI",
+    "slug": "todoist-ai",
+    "monthly_price": 4,
+    "default_hours_saved": 2,
+    "affiliate_link": "https://affiliate.example.com/todoist-ai?ref=yourid",
+    "short_summary": "Smart task lists with AI prioritization for daily efficiency.",
+    "category": "ai-productivity",
+    "features": [
+      "Helps organize and clarify task lists",
+      "Supports cleaner prioritization",
+      "Fits a lightweight personal productivity workflow"
+    ],
+    "pros": [
+      "Low monthly cost",
+      "Simple to understand and use",
+      "Better fit for personal productivity than bloated enterprise tools"
+    ],
+    "cons": [
+      "Time savings may be modest for advanced users",
+      "Less transformative than heavier automation products",
+      "Harder to justify if your task system is already clean"
+    ],
+    "best_for_override": "Individuals who like lightweight task management and want a small AI boost rather than a full operating system.",
+    "not_ideal_for_override": "Power users expecting major automation or teams needing deeper workflow intelligence.",
+    "pricing_note": "Check the current Todoist pricing and AI availability before relying on older plan details.",
+    "review_summary": "Todoist AI feels like a refinement tool more than a category-defining productivity leap. It works best when simplicity is the goal."
+  },
+  {
+    "name": "Otter.ai",
+    "slug": "otter-ai",
+    "monthly_price": 8.33,
+    "default_hours_saved": 3,
+    "affiliate_link": "https://affiliate.example.com/otter-ai?ref=yourid",
+    "short_summary": "AI meeting transcription and note-taking.",
+    "category": "ai-meeting",
+    "features": [
+      "Transcribes meetings automatically",
+      "Creates searchable notes and summaries",
+      "Makes follow-up details easier to recover later"
+    ],
+    "pros": [
+      "Strong everyday fit for frequent meetings",
+      "Useful for people who miss details during live calls",
+      "Searchability can save hours over time"
+    ],
+    "cons": [
+      "Less valuable if you rarely meet",
+      "Transcript quality still depends on audio quality",
+      "Some users will have privacy concerns with meeting capture"
+    ],
+    "best_for_override": "Client-facing professionals, students, and teams that want searchable transcripts instead of relying on memory or scattered notes.",
+    "not_ideal_for_override": "People with very few meetings or workflows where recordings and transcripts are not acceptable.",
+    "pricing_note": "Pricing and transcription limits can change. Verify the current free and paid plan structure before deciding.",
+    "review_summary": "Otter.ai is easy to justify when meetings create real note-taking or follow-up pain."
+  },
+  {
+    "name": "Fireflies.ai",
+    "slug": "fireflies-ai",
+    "monthly_price": 10,
+    "default_hours_saved": 4,
+    "affiliate_link": "https://affiliate.example.com/fireflies-ai?ref=yourid",
+    "short_summary": "AI recorder for meetings with summaries and insights.",
+    "category": "ai-meeting",
+    "features": [
+      "Captures and summarizes meeting conversations",
+      "Helps extract action items from calls",
+      "Works well for shared team visibility"
+    ],
+    "pros": [
+      "Good fit for meeting-heavy teams",
+      "Useful when multiple people need the same call summary",
+      "Can reduce post-meeting admin and recap work"
+    ],
+    "cons": [
+      "Can be more tool than a solo user needs",
+      "Value depends on how often meetings actually generate work",
+      "Some teams may prefer simpler meeting note tools"
+    ],
+    "best_for_override": "Teams, agencies, and sales-heavy workflows where multiple people benefit from shared meeting intelligence.",
+    "not_ideal_for_override": "Solo users who just want a minimal transcript tool without extra workflow layers.",
+    "pricing_note": "Check the official pricing for current limits, integrations, and feature differences between tiers.",
+    "review_summary": "Fireflies.ai is more compelling when meetings need to become shared operational knowledge, not just personal notes."
+  },
+  {
+    "name": "Writesonic",
+    "slug": "writesonic",
+    "monthly_price": 12,
+    "default_hours_saved": 5,
+    "affiliate_link": "https://affiliate.example.com/writesonic?ref=yourid",
+    "short_summary": "AI writer for content creation and SEO.",
+    "category": "ai-writing",
+    "features": [
+      "Supports blog and marketing draft generation",
+      "Targets SEO-oriented workflows",
+      "Useful for quick content ideation and first drafts"
+    ],
+    "pros": [
+      "Faster than writing from a blank page",
+      "More affordable than some marketing-focused alternatives",
+      "Useful for SEO and content production workflows"
+    ],
+    "cons": [
+      "Needs editing for quality and originality",
+      "Can sound generic if overused",
+      "Less differentiated than top-tier general AI tools"
+    ],
+    "best_for_override": "Content marketers, bloggers, and operators trying to speed up first drafts and SEO-focused writing work.",
+    "not_ideal_for_override": "Users who expect polished final copy with very little editing or those who need deeper reasoning than draft generation.",
+    "pricing_note": "Plan limits and feature access can change. Check the current Writesonic plan details before subscribing.",
+    "review_summary": "Writesonic is strongest as a drafting accelerator. It makes more sense when speed matters more than perfect first-pass quality."
+  },
+  {
+    "name": "Sunsama",
+    "slug": "sunsama",
+    "monthly_price": 20,
+    "default_hours_saved": 4,
+    "affiliate_link": "https://affiliate.example.com/sunsama?ref=yourid",
+    "short_summary": "AI daily planner integrating calendars and tasks.",
+    "category": "ai-scheduling",
+    "features": [
+      "Combines task planning with daily scheduling",
+      "Encourages realistic daily workload planning",
+      "Connects calendar and task sources"
+    ],
+    "pros": [
+      "Strong for intentional daily planning",
+      "More reflective and calm than aggressive schedulers",
+      "Good fit for people who want to plan with purpose"
+    ],
+    "cons": [
+      "Not cheap for a planning tool",
+      "Less attractive if you prefer raw automation over intentional planning",
+      "Best value comes with daily habit consistency"
+    ],
+    "best_for_override": "People who want a deliberate daily planning ritual, not just auto-scheduling software.",
+    "not_ideal_for_override": "Users who want the system to do everything automatically or who will not use a daily planning workflow consistently.",
+    "pricing_note": "Verify current Sunsama pricing and trial details directly, since plan terms may change.",
+    "review_summary": "Sunsama is less about squeezing every minute and more about planning a sustainable day."
+  }
+]

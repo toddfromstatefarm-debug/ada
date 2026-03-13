@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todoist AI Worth It Calculator - AI Productivity Calculators</title>
+  <meta name="description" content="Calculate whether Todoist AI likely pays for itself based on your hourly value and expected time savings.">
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <header class="site-header"><div class="container header-inner"><a class="brand" href="/">AI Productivity Calculators</a><nav class="site-nav"><a href="/">Home</a><a href="/tools/">Tools</a><a href="/about/">About</a><a href="/methodology/">Methodology</a></nav></div></header>
+  <main class="container">
+    <section class="hero"><p class="last-updated">Last updated: March 2026</p><h1>Todoist AI Worth It Calculator</h1><p>Use this calculator to estimate whether Todoist AI saves enough time to justify the monthly cost. Change the assumptions to match your real workflow, not best-case marketing claims.</p></section>
+    <section class="card">
+      <form id="calc-form">
+        <div><label for="rate">Hourly rate ($)</label><input type="number" id="rate" value="50" min="0" step="0.01"></div>
+        <div><label for="hours">Weekly hours saved</label><input type="number" id="hours" value="2" min="0" step="0.5"></div>
+        <div><label for="price">Monthly price ($)</label><input type="number" id="price" value="4" min="0" step="0.01"></div>
+        <div><button type="button" onclick="calculate()">Calculate</button></div>
+      </form>
+      <div id="result" class="result-box"><h2>Your estimated result</h2><p><strong>Net monthly gain:</strong> <span id="gain"></span></p><p><strong>Annual projection:</strong> <span id="annual"></span></p><p id="verdict"></p></div>
+    </section>
+    <section class="card"><a href="https://affiliate.example.com/todoist-ai?ref=yourid" class="button">Try Todoist AI</a><p class="disclosure">This page includes affiliate links. If you buy through one of them, the site may earn a commission at no extra cost to you. <a href="/disclosure/">See disclosure</a>.</p></section>
+    <div class="grid-two"><section class="card"><h2>Best for</h2><p>Individuals who like lightweight task management and want a small AI boost rather than a full operating system.</p></section><section class="card"><h2>When it may not be worth it</h2><p>Power users expecting major automation or teams needing deeper workflow intelligence.</p></section></div>
+    <section class="card"><h2>How to interpret this result</h2><p>A strong positive number suggests the tool may be worth it if you actually use it consistently. A borderline result means the decision depends heavily on workflow fit. A negative result means the tool is probably not justified unless your time savings are higher than expected.</p></section>
+    <section class="card"><h2>FAQ</h2><ul><li><strong>Are these savings guaranteed?</strong> No. The calculator is only as good as the assumptions you enter.</li><li><strong>Is the pricing always current?</strong> Not necessarily. Always verify the official pricing before subscribing.</li><li><strong>Why use this instead of a normal review?</strong> Because it forces the decision back to your time value instead of generic hype.</li></ul></section>
+    <section class="card"><h2>Related tools</h2><ul><li><a href="/tools/clickup-ai-worth-it-calculator/">ClickUp AI Calculator</a></li>
+<li><a href="/tools/fireflies-ai-worth-it-calculator/">Fireflies.ai Calculator</a></li>
+<li><a href="/tools/jasper-worth-it-calculator/">Jasper Calculator</a></li></ul></section>
+  </main>
+  <footer class="site-footer"><div class="container"><ul class="footer-links"><li><a href="/about/">About</a></li><li><a href="/contact/">Contact</a></li><li><a href="/privacy/">Privacy</a></li><li><a href="/disclosure/">Disclosure</a></li><li><a href="/methodology/">Methodology</a></li></ul><p class="small">&copy; 2026 AI Productivity Calculators. All rights reserved.</p></div></footer>
+  <script>
+  function calculate() {
+    const rate = parseFloat(document.getElementById('rate').value) || 0;
+    const hours = parseFloat(document.getElementById('hours').value) || 0;
+    const price = parseFloat(document.getElementById('price').value) || 0;
+    const monthlyGain = (hours * rate * 4) - price;
+    const annual = monthlyGain * 12;
+    document.getElementById('gain').textContent = '$' + monthlyGain.toFixed(2);
+    document.getElementById('annual').textContent = '$' + annual.toFixed(2);
+    const verdictEl = document.getElementById('verdict');
+    verdictEl.className = '';
+    if (monthlyGain > 200) { verdictEl.textContent = 'This looks clearly worth it for many freelancers.'; verdictEl.classList.add('verdict-strong'); }
+    else if (monthlyGain > 0) { verdictEl.textContent = 'This could be worth it if you use it consistently.'; verdictEl.classList.add('verdict-borderline'); }
+    else { verdictEl.textContent = 'This may not be worth it unless it saves you more time than expected.'; verdictEl.classList.add('verdict-negative'); }
+    document.getElementById('result').style.display = 'block';
+  }
+  </script>
+</body>
+</html>
