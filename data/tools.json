@@ -4,7 +4,7 @@
     "slug": "reclaim-ai",
     "monthly_price": 15,
     "default_hours_saved": 5,
-    "affiliate_link": "https://affiliate.example.com/reclaim-ai?ref=yourid",
+    "affiliate_link": "https://reclaim.ai/",
     "short_summary": "Auto-schedules your day to block distractions and reclaim hours.",
     "category": "ai-scheduling",
     "features": [
@@ -45,7 +45,7 @@
     "slug": "motion",
     "monthly_price": 19,
     "default_hours_saved": 4,
-    "affiliate_link": "https://affiliate.example.com/motion?ref=yourid",
+    "affiliate_link": "https://www.usemotion.com/",
     "short_summary": "AI calendar that optimizes tasks for busy solopreneurs.",
     "category": "ai-scheduling",
     "features": [
@@ -86,7 +86,7 @@
     "slug": "notion-ai",
     "monthly_price": 8,
     "default_hours_saved": 3,
-    "affiliate_link": "https://affiliate.example.com/notion-ai?ref=yourid",
+    "affiliate_link": "https://www.notion.so/product/ai",
     "short_summary": "AI-powered note-taking and organization for creative workflows.",
     "category": "ai-writing",
     "features": [
@@ -127,7 +127,7 @@
     "slug": "jasper",
     "monthly_price": 49,
     "default_hours_saved": 6,
-    "affiliate_link": "https://affiliate.example.com/jasper?ref=yourid",
+    "affiliate_link": "https://jasper.ai/",
     "short_summary": "AI content generator for marketing and writing tasks.",
     "category": "ai-writing",
     "features": [
@@ -168,7 +168,7 @@
     "slug": "clickup-ai",
     "monthly_price": 5,
     "default_hours_saved": 4,
-    "affiliate_link": "https://affiliate.example.com/clickup-ai?ref=yourid",
+    "affiliate_link": "https://clickup.com/",
     "short_summary": "Task management with AI automation for team productivity.",
     "category": "ai-productivity",
     "features": [
@@ -209,7 +209,7 @@
     "slug": "todoist-ai",
     "monthly_price": 4,
     "default_hours_saved": 2,
-    "affiliate_link": "https://affiliate.example.com/todoist-ai?ref=yourid",
+    "affiliate_link": "https://todoist.com/",
     "short_summary": "Smart task lists with AI prioritization for daily efficiency.",
     "category": "ai-productivity",
     "features": [
@@ -250,7 +250,7 @@
     "slug": "otter-ai",
     "monthly_price": 8.33,
     "default_hours_saved": 3,
-    "affiliate_link": "https://affiliate.example.com/otter-ai?ref=yourid",
+    "affiliate_link": "https://otter.ai/",
     "short_summary": "AI meeting transcription and note-taking.",
     "category": "ai-meeting",
     "features": [
@@ -291,7 +291,7 @@
     "slug": "fireflies-ai",
     "monthly_price": 10,
     "default_hours_saved": 4,
-    "affiliate_link": "https://affiliate.example.com/fireflies-ai?ref=yourid",
+    "affiliate_link": "https://fireflies.ai/",
     "short_summary": "AI recorder for meetings with summaries and insights.",
     "category": "ai-meeting",
     "features": [
@@ -332,7 +332,7 @@
     "slug": "writesonic",
     "monthly_price": 12,
     "default_hours_saved": 5,
-    "affiliate_link": "https://affiliate.example.com/writesonic?ref=yourid",
+    "affiliate_link": "https://writesonic.com/",
     "short_summary": "AI writer for content creation and SEO.",
     "category": "ai-writing",
     "features": [
@@ -373,7 +373,7 @@
     "slug": "sunsama",
     "monthly_price": 20,
     "default_hours_saved": 4,
-    "affiliate_link": "https://affiliate.example.com/sunsama?ref=yourid",
+    "affiliate_link": "https://www.sunsama.com/",
     "short_summary": "AI daily planner integrating calendars and tasks.",
     "category": "ai-scheduling",
     "features": [
