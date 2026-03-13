@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title}</title>
+    <meta name="description" content="{meta_description}">
+    <link rel="stylesheet" href="{stylesheet_url}">
+    <style>
+        .comparison-grid {{
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+            align-items: stretch;
+        }}
+        .tool-column {{
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid #eee;
+        }}
+        .tool-column h2 {{ margin-top: 0; }}
+        .vs {{
+            font-size: 2rem;
+            font-weight: bold;
+            color: #666;
+            align-self: center;
+            text-align: center;
+        }}
+        .comparison-actions {{ margin-top: 1rem; }}
+        .comparison-actions .cta-button {{ margin-right: 0.5rem; margin-bottom: 0.75rem; }}
+        @media (max-width: 768px) {{
+            .comparison-grid {{
+                grid-template-columns: 1fr;
+            }}
+            .vs {{
+                order: -1;
+                margin: 1rem 0;
+            }}
+        }}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><a href="{home_url}">AI Productivity Calculators</a></h1>
+            <nav>
+                <a href="{home_url}">Home</a>
+                <a href="{tools_url}">Tools</a>
+                <a href="{about_url}">About</a>
+                <a href="{methodology_url}">Methodology</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1>{h1}</h1>
+        <p class="last-updated">Last updated: {last_updated}</p>
+
+        <p class="intro">{intro}</p>
+
+        <div class="comparison-grid">
+            <div class="tool-column">
+                <h2>{tool_a_name}</h2>
+                <ul>{tool_a_highlights}</ul>
+                <div class="comparison-actions">
+                    <a href="{tool_a_calculator_path}" class="cta-button">Calculate {tool_a_name} ROI</a>
+                    <a href="{tool_a_affiliate_link}" class="cta-button">Try {tool_a_name}</a>
+                </div>
+            </div>
+
+            <div class="vs">VS</div>
+
+            <div class="tool-column">
+                <h2>{tool_b_name}</h2>
+                <ul>{tool_b_highlights}</ul>
+                <div class="comparison-actions">
+                    <a href="{tool_b_calculator_path}" class="cta-button">Calculate {tool_b_name} ROI</a>
+                    <a href="{tool_b_affiliate_link}" class="cta-button">Try {tool_b_name}</a>
+                </div>
+            </div>
+        </div>
+
+        <h2>Quick Verdict</h2>
+        <p>{verdict}</p>
+
+        <h2>Best For</h2>
+        <p>{best_for}</p>
+
+        <h2>When to Choose One Over the Other</h2>
+        <p>{when_to_choose}</p>
+
+        <h2>Related Calculators</h2>
+        <ul>{related_links}</ul>
+
+        <p class="disclosure">Affiliate links may earn commission at no extra cost to you. <a href="{disclosure_url}">Full disclosure</a>.</p>
+    </main>
+
+    <footer>
+        <div class="container">
+            <ul>
+                <li><a href="{about_url}">About</a></li>
+                <li><a href="{contact_url}">Contact</a></li>
+                <li><a href="{privacy_url}">Privacy</a></li>
+                <li><a href="{disclosure_url}">Disclosure</a></li>
+                <li><a href="{methodology_url}">Methodology</a></li>
+            </ul>
+            <p>© 2026 AI Productivity Calculators. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
