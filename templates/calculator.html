@@ -4,31 +4,135 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{tool_name} Worth It Calculator - AI Productivity Calculators</title>
-  <meta name="description" content="Calculate whether {tool_name} likely pays for itself based on your hourly value and expected time savings.">
+  <meta name="description" content="Calculate whether {tool_name} likely pays for itself based on your hourly value and realistic time savings.">
   <link rel="stylesheet" href="{stylesheet_url}">
 </head>
 <body>
-  <header class="site-header"><div class="container header-inner"><a class="brand" href="{home_url}">AI Productivity Calculators</a><nav class="site-nav"><a href="{home_url}">Home</a><a href="{tools_url}">Tools</a><a href="{about_url}">About</a><a href="{methodology_url}">Methodology</a></nav></div></header>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="{home_url}">AI Productivity Calculators</a>
+      <nav class="site-nav">
+        <a href="{home_url}">Home</a>
+        <a href="{tools_url}">Tools</a>
+        <a href="{about_url}">About</a>
+        <a href="{methodology_url}">Methodology</a>
+      </nav>
+    </div>
+  </header>
+
   <main class="container">
-    <section class="hero"><p class="last-updated">Last updated: {last_updated}</p><h1>{tool_name} Worth It Calculator</h1><p>Use this calculator to estimate whether {tool_name} saves enough time to justify the monthly cost. Change the assumptions to match your real workflow, not best-case marketing claims.</p></section>
-    <section class="card">
-      <form id="calc-form">
-        <div><label for="rate">Hourly rate ($)</label><input type="number" id="rate" value="50" min="0" step="0.01"></div>
-        <div><label for="hours">Weekly hours saved</label><input type="number" id="hours" value="{default_hours_saved}" min="0" step="0.5"></div>
-        <div><label for="price">Monthly price ($)</label><input type="number" id="price" value="{monthly_price}" min="0" step="0.01"></div>
-        <div><button type="button" onclick="calculate()">Calculate</button></div>
-      </form>
-      <div id="result" class="result-box"><h2>Your estimated result</h2><p><strong>Net monthly gain:</strong> <span id="gain"></span></p><p><strong>Annual projection:</strong> <span id="annual"></span></p><p id="verdict"></p></div>
+    <section class="hero">
+      <p class="last-updated">Last updated: {last_updated}</p>
+      <h1>{tool_name} Worth It Calculator</h1>
+      <p class="tool-intro">{calculator_intro}</p>
     </section>
-    <section class="card"><a href="{affiliate_link}" class="button">Try {tool_name}</a><p class="disclosure">This page includes affiliate links. If you buy through one of them, the site may earn a commission at no extra cost to you. <a href="{disclosure_url}">See disclosure</a>.</p></section>
-    <div class="grid-two"><section class="card"><h2>Best for</h2><p>{best_for}</p></section><section class="card"><h2>When it may not be worth it</h2><p>{not_ideal_for}</p></section></div>
-    <section class="card"><h2>How to interpret this result</h2><p>A strong positive number suggests the tool may be worth it if you actually use it consistently. A borderline result means the decision depends heavily on workflow fit. A negative result means the tool is probably not justified unless your time savings are higher than expected.</p></section>
-    <section class="card"><h2>FAQ</h2><ul><li><strong>Are these savings guaranteed?</strong> No. The calculator is only as good as the assumptions you enter.</li><li><strong>Is the pricing always current?</strong> Not necessarily. Always verify the official pricing before subscribing.</li><li><strong>Why use this instead of a normal review?</strong> Because it forces the decision back to your time value instead of generic hype.</li></ul></section>
-    <section class="card"><h2>Related tools</h2><ul>{related_tools}</ul></section>
+
+    <section class="card calculator-section">
+      <form id="calc-form">
+        <div class="form-field">
+          <label for="rate">Your hourly rate ($)</label>
+          <input type="number" id="rate" value="50" min="0" step="0.01">
+          <div class="field-help">{hourly_rate_guidance}</div>
+        </div>
+
+        <div class="form-field">
+          <label for="hours">Weekly hours saved</label>
+          <input type="number" id="hours" value="{default_hours_saved}" min="0" step="0.5">
+          <div class="field-help">
+            <p><strong>Realistic ranges for {tool_name}:</strong></p>
+            <ul>
+              <li>Conservative: {conservative_hours} hours/week</li>
+              <li>Moderate: {moderate_hours} hours/week</li>
+              <li>Aggressive: {aggressive_hours} hours/week</li>
+            </ul>
+            <p>This tool typically saves time on:</p>
+            <ul class="factors-list">
+              {hours_saved_factors}
+            </ul>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="price">Monthly price ($)</label>
+          <input type="number" id="price" value="{monthly_price}" min="0" step="0.01">
+          <div class="field-help">
+            <p>{pricing_basis}</p>
+            <p><strong>Always verify current pricing</strong> on the official site. Plans, annual discounts, and add-ons change frequently.</p>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" onclick="calculate()">Calculate</button>
+        </div>
+      </form>
+
+      <div id="result" class="result-box" style="display:none;">
+        <h2>Your estimated result</h2>
+        <p><strong>Net monthly gain / loss:</strong> <span id="gain"></span></p>
+        <p><strong>Annual projection:</strong> <span id="annual"></span></p>
+        <p id="verdict" class="verdict"></p>
+      </div>
+    </section>
+
+    <section class="card cta-section">
+      <a href="{affiliate_link}" class="button primary">Try {tool_name}</a>
+      <p class="disclosure">This page contains affiliate links. If you purchase through them, we may earn a small commission at no extra cost to you. <a href="{disclosure_url}">Full disclosure</a>.</p>
+    </section>
+
+    <div class="grid-two">
+      <section class="card">
+        <h2>Best for</h2>
+        <p>{best_for}</p>
+      </section>
+      <section class="card">
+        <h2>When it may not be worth it</h2>
+        <p>{not_ideal_for}</p>
+      </section>
+    </div>
+
+    <section class="card">
+      <h2>Assumption guidance</h2>
+      <p>{interpretation_note}</p>
+    </section>
+
+    <section class="card">
+      <h2>How to interpret this result</h2>
+      <p>A strong positive number suggests the tool can pay for itself — <strong>if</strong> you use it consistently in the ways described. Borderline results mean outcome depends heavily on actual adoption and workflow fit. Negative numbers usually indicate either optimistic assumptions or poor category fit for your current routine.</p>
+    </section>
+
+    <section class="card">
+      <h2>FAQ</h2>
+      <ul>
+        <li><strong>Are these savings guaranteed?</strong> No — the result is only as realistic as the numbers you enter.</li>
+        <li><strong>Is the price always current?</strong> No. Pricing changes. Always verify directly on the official site.</li>
+        <li><strong>Why not just read reviews?</strong> Reviews are subjective. This calculator forces the decision back to <em>your</em> time value and usage pattern.</li>
+        <li><strong>What if I get a negative result?</strong> It usually means the tool is either too expensive for your usage level or doesn't solve a frequent enough pain point in your week.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Related tools</h2>
+      <ul class="related-list">
+        {related_tools}
+      </ul>
+    </section>
   </main>
-  <footer class="site-footer"><div class="container"><ul class="footer-links"><li><a href="{about_url}">About</a></li><li><a href="{contact_url}">Contact</a></li><li><a href="{privacy_url}">Privacy</a></li><li><a href="{disclosure_url}">Disclosure</a></li><li><a href="{methodology_url}">Methodology</a></li></ul><p class="small">&copy; 2026 AI Productivity Calculators. All rights reserved.</p></div></footer>
+
+  <footer class="site-footer">
+    <div class="container">
+      <ul class="footer-links">
+        <li><a href="{about_url}">About</a></li>
+        <li><a href="{contact_url}">Contact</a></li>
+        <li><a href="{privacy_url}">Privacy</a></li>
+        <li><a href="{disclosure_url}">Disclosure</a></li>
+        <li><a href="{methodology_url}">Methodology</a></li>
+      </ul>
+      <p class="small">© 2026 AI Productivity Calculators. All rights reserved.</p>
+    </div>
+  </footer>
+
   <script>
-  function calculate() {{
+  function calculate() {
     const rate = parseFloat(document.getElementById('rate').value) || 0;
     const hours = parseFloat(document.getElementById('hours').value) || 0;
     const price = parseFloat(document.getElementById('price').value) || 0;
@@ -37,12 +141,20 @@
     document.getElementById('gain').textContent = '$' + monthlyGain.toFixed(2);
     document.getElementById('annual').textContent = '$' + annual.toFixed(2);
     const verdictEl = document.getElementById('verdict');
-    verdictEl.className = '';
-    if (monthlyGain > 200) {{ verdictEl.textContent = 'This looks clearly worth it for many freelancers.'; verdictEl.classList.add('verdict-strong'); }}
-    else if (monthlyGain > 0) {{ verdictEl.textContent = 'This could be worth it if you use it consistently.'; verdictEl.classList.add('verdict-borderline'); }}
-    else {{ verdictEl.textContent = 'This may not be worth it unless it saves you more time than expected.'; verdictEl.classList.add('verdict-negative'); }}
+    verdictEl.className = 'verdict';
+    verdictEl.textContent = '';
+    if (monthlyGain > 200) {
+      verdictEl.textContent = 'This looks clearly worth it — assuming consistent real usage.';
+      verdictEl.classList.add('verdict-strong');
+    } else if (monthlyGain > 0) {
+      verdictEl.textContent = 'This can be worth it — but only if you actually adopt and use the tool regularly.';
+      verdictEl.classList.add('verdict-borderline');
+    } else {
+      verdictEl.textContent = 'Probably not worth it under these assumptions. Either savings are lower than expected or workflow fit is weak.';
+      verdictEl.classList.add('verdict-negative');
+    }
     document.getElementById('result').style.display = 'block';
-  }}
+  }
   </script>
 </body>
 </html>

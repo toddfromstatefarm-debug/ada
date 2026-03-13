@@ -27,9 +27,9 @@ def load_tools():
         return json.load(f)
 
 
-def load_template():
-    template_path = project_root() / "templates" / "calculator.html"
-    with template_path.open("r", encoding="utf-8") as f:
+def load_template(template_name="calculator.html"):
+    path = project_root() / "templates" / template_name
+    with path.open("r", encoding="utf-8") as f:
         return f.read()
 
 
@@ -41,62 +41,66 @@ def load_comparisons():
     return []
 
 
-def get_category_copy(category: str):
-    copies = {
-        "ai-writing": {
-            "best_for": "Content creators, bloggers, marketers, and anyone who writes regularly and wants faster drafting, editing, or outlining.",
-            "not_ideal_for": "People with very light writing needs or users who want total manual control over every word.",
-        },
+def get_category_fallbacks(category: str):
+    fallbacks = {
         "ai-scheduling": {
-            "best_for": "Busy freelancers, consultants, and operators juggling meetings, deep work, and calendar complexity.",
-            "not_ideal_for": "People with simple schedules, minimal meetings, or a workflow that does not depend on calendar coordination.",
-        },
-        "ai-productivity": {
-            "best_for": "Knowledge workers, project managers, and small teams trying to reduce repetitive admin and task overhead.",
-            "not_ideal_for": "Users whose work is highly unstructured or who do not consistently use productivity systems.",
+            "hours_saved_factors": [
+                "manual calendar cleanup and rescheduling",
+                "protecting focus / deep work time",
+                "automatic habit scheduling",
+                "smart buffer time around events"
+            ],
+            "conservative_hours": "1–2",
+            "moderate_hours": "3–5",
+            "aggressive_hours": "6–9",
         },
         "ai-meeting": {
-            "best_for": "Remote teams, client-facing professionals, and anyone who spends significant time in calls and follow-ups.",
-            "not_ideal_for": "People who rarely join meetings or who do not need searchable notes and summaries.",
+            "hours_saved_factors": [
+                "real-time note taking during calls",
+                "writing post-meeting summaries & recaps",
+                "extracting & tracking action items",
+                "searching / referencing old meetings"
+            ],
+            "conservative_hours": "1–2",
+            "moderate_hours": "2.5–5",
+            "aggressive_hours": "6–10",
+        },
+        "ai-writing": {
+            "hours_saved_factors": [
+                "first-draft content generation",
+                "rewriting / editing existing copy",
+                "brainstorming and outlining",
+                "creating multiple variants quickly"
+            ],
+            "conservative_hours": "1.5–3",
+            "moderate_hours": "4–7",
+            "aggressive_hours": "8–14",
+        },
+        "ai-productivity": {
+            "hours_saved_factors": [
+                "writing clearer tasks & descriptions",
+                "summarizing updates & progress",
+                "repetitive admin / project cleanup",
+                "basic prioritization & grouping"
+            ],
+            "conservative_hours": "1–2",
+            "moderate_hours": "3–5",
+            "aggressive_hours": "6–10",
         },
     }
-    return copies.get(
-        category,
-        {
-            "best_for": "Professionals looking to save time in recurring workflows.",
-            "not_ideal_for": "Users with very light workloads or little need for automation.",
-        },
-    )
+    return fallbacks.get(category, {
+        "hours_saved_factors": ["repetitive workflow steps", "manual organization", "context switching", "recap & follow-up work"],
+        "conservative_hours": "1–2",
+        "moderate_hours": "3–5",
+        "aggressive_hours": "6–10",
+    })
 
 
-def validate_tool(tool):
-    required = [
-        "name",
-        "slug",
-        "monthly_price",
-        "default_hours_saved",
-        "affiliate_link",
-        "short_summary",
-        "category",
-    ]
-    for field in required:
-        if field not in tool:
-            return False, f"Missing field '{field}'"
-        if isinstance(tool[field], str) and not tool[field].strip():
-            return False, f"Empty field '{field}'"
-    if not isinstance(tool["name"], str):
-        return False, "name must be a string"
-    if not isinstance(tool["slug"], str):
-        return False, "slug must be a string"
-    if not isinstance(tool["monthly_price"], (int, float)) or tool["monthly_price"] < 0:
-        return False, "monthly_price must be a non-negative number"
-    if not isinstance(tool["default_hours_saved"], (int, float)) or tool["default_hours_saved"] < 0:
-        return False, "default_hours_saved must be a non-negative number"
-    if not str(tool["affiliate_link"]).startswith(("http://", "https://")):
-        return False, "affiliate_link must be a valid URL"
-    if not isinstance(tool["category"], str):
-        return False, "category must be a string"
-    return True, ""
+def format_hours_saved_factors(factors):
+    if not factors:
+        return ""
+    items = [f"<li>{html.escape(f)}</li>" for f in factors]
+    return "<ul class=\"factors-list\">\n" + "\n".join(items) + "\n</ul>"
 
 
 def build_related_tools(tools_list, current_tool):
@@ -112,7 +116,7 @@ def build_related_tools(tools_list, current_tool):
             [t for t in tools_list if t["slug"] != current_slug and t["slug"] not in {r["slug"] for r in related}],
             key=lambda t: t["name"].lower(),
         )
-        related.extend(fallback[: 3 - len(related)])
+        related.extend(fallback[:3 - len(related)])
     items = []
     for tool in related[:3]:
         name = html.escape(tool["name"])
@@ -142,29 +146,45 @@ def site_shell_footer() -> str:
         f'<li><a href="{internal_url("/privacy/")}">Privacy</a></li>'
         f'<li><a href="{internal_url("/disclosure/")}">Disclosure</a></li>'
         f'<li><a href="{internal_url("/methodology/")}">Methodology</a></li>'
-        f'</ul><p class="small">&copy; 2026 AI Productivity Calculators. All rights reserved.</p></div></footer>'
+        f'</ul><p class="small">© 2026 AI Productivity Calculators. All rights reserved.</p></div></footer>'
     )
 
 
 def generate_calculator_page(tool, tools_list, template):
     now = datetime.date.today()
     last_updated = now.strftime("%B %Y")
+
     name = html.escape(tool["name"])
     monthly_price = tool.get("monthly_price", 0)
-    default_hours_saved = tool.get("default_hours_saved", 0)
+    default_hours = tool.get("default_hours_saved", 3)
+
     affiliate_link = html.escape(tool.get("affiliate_link", "#"), quote=True)
-    category = tool.get("category", "")
-    copy = get_category_copy(category)
-    best_for = html.escape(tool.get("best_for_override") or copy["best_for"])
-    not_ideal_for = html.escape(tool.get("not_ideal_for_override") or copy["not_ideal_for"])
+
+    calculator_intro   = html.escape(tool.get("calculator_intro",   f"{name} helps automate parts of your workflow. This calculator estimates whether the time saved justifies the monthly cost."))
+    pricing_basis      = html.escape(tool.get("pricing_basis",       f"Uses the most common individual plan price (~${monthly_price}/mo). Check current official pricing."))
+    interpretation_note = html.escape(tool.get("interpretation_note", "Positive results require consistent usage of the tool's core features. Low adoption = much lower real savings."))
+
+    hourly_rate_guidance = html.escape(tool.get("hourly_rate_guidance", "Freelancers: use client billing rate. Salaried: salary ÷ 2080. If unsure, start conservative."))
+
+    fb = get_category_fallbacks(tool.get("category", ""))
+    conservative = tool.get("conservative_hours", fb["conservative_hours"])
+    moderate     = tool.get("moderate_hours",     fb["moderate_hours"])
+    aggressive   = tool.get("aggressive_hours",   fb["aggressive_hours"])
+
+    factors_list = tool.get("hours_saved_factors", fb["hours_saved_factors"])
+    factors_html = format_hours_saved_factors(factors_list)
+
+    best_for    = html.escape(tool.get("best_for_override")    or "Professionals looking to save time in recurring workflows.")
+    not_ideal   = html.escape(tool.get("not_ideal_for_override") or "Users with very light workloads or little need for this kind of automation.")
+
     return template.format(
         tool_name=name,
         monthly_price=monthly_price,
-        default_hours_saved=default_hours_saved,
+        default_hours_saved=default_hours,
         affiliate_link=affiliate_link,
         last_updated=last_updated,
         best_for=best_for,
-        not_ideal_for=not_ideal_for,
+        not_ideal_for=not_ideal,
         related_tools=build_related_tools(tools_list, tool),
         stylesheet_url=internal_url("/assets/styles.css"),
         home_url=internal_url("/"),
@@ -174,6 +194,14 @@ def generate_calculator_page(tool, tools_list, template):
         contact_url=internal_url("/contact/"),
         privacy_url=internal_url("/privacy/"),
         disclosure_url=internal_url("/disclosure/"),
+        calculator_intro=calculator_intro,
+        pricing_basis=pricing_basis,
+        hours_saved_factors=factors_html,
+        conservative_hours=conservative,
+        moderate_hours=moderate,
+        aggressive_hours=aggressive,
+        hourly_rate_guidance=hourly_rate_guidance,
+        interpretation_note=interpretation_note,
     )
 
 
@@ -183,20 +211,20 @@ def generate_hub_page(tools_list):
         items.append(f'<li><a href="{internal_url(f"/tools/{tool["slug"]}-worth-it-calculator/")}">{html.escape(tool["name"])} Calculator</a></li>')
     joined = "\n      ".join(items)
     return f"""<!DOCTYPE html>
-<html lang=\"en\">
+<html lang="en">
 <head>
-  <meta charset=\"UTF-8\">
-  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>All Tools - AI Productivity Calculators</title>
-  <meta name=\"description\" content=\"Browse all AI productivity calculators on the site.\">
-  <link rel=\"stylesheet\" href=\"{internal_url('/assets/styles.css')}\">
+  <meta name="description" content="Browse all AI productivity tool calculators.">
+  <link rel="stylesheet" href="{internal_url('/assets/styles.css')}">
 </head>
 <body>
   {site_shell_header()}
-  <main class=\"container\">
-    <h1>All Tools</h1>
-    <p>Browse every calculator on the site and quickly estimate whether a given tool is worth the monthly cost for your workflow.</p>
-    <ul>
+  <main class="container">
+    <h1>All Calculators</h1>
+    <p>Estimate whether each tool is worth the monthly cost for <em>your</em> workflow.</p>
+    <ul class="tool-list">
       {joined}
     </ul>
   </main>
@@ -207,9 +235,10 @@ def generate_hub_page(tools_list):
 
 
 def generate_homepage(tools_list, comparisons):
-    featured_tools = tools_list[:5]
-    featured_reviews = tools_list[:5]
-    featured_comparisons = comparisons[:5]
+    featured_tools = sorted(tools_list, key=lambda t: t["name"].lower())[:6]
+    featured_reviews = featured_tools[:4]
+    featured_comparisons = comparisons[:4] if comparisons else []
+
     tool_items = "\n      ".join(
         f'<li><a href="{internal_url(f"/tools/{t["slug"]}-worth-it-calculator/")}">{html.escape(t["name"])} Calculator</a></li>'
         for t in featured_tools
@@ -219,43 +248,68 @@ def generate_homepage(tools_list, comparisons):
         for t in featured_reviews
     )
     comparison_items = "\n      ".join(
-        f'<li><a href="{internal_url(f"/compare/{c["slug"]}/")}">{html.escape(c["slug"].replace("-", " ").title())}</a></li>'
+        f'<li><a href="{internal_url(f"/compare/{c["slug"]}/")}">{html.escape(c.get("title", c["slug"].replace("-", " ").title()))}</a></li>'
         for c in featured_comparisons
-    )
+    ) if featured_comparisons else "<li>No comparisons added yet</li>"
+
     return f"""<!DOCTYPE html>
-<html lang=\"en\">
+<html lang="en">
 <head>
-  <meta charset=\"UTF-8\">
-  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
-  <title>AI Productivity Calculators</title>
-  <meta name=\"description\" content=\"Free calculators, reviews, and comparisons to help you decide whether AI productivity tools are worth the money.\">
-  <link rel=\"stylesheet\" href=\"{internal_url('/assets/styles.css')}\">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Productivity Calculators – Worth the Money?</title>
+  <meta name="description" content="Free calculators that show whether popular AI productivity tools actually pay for themselves based on your hourly value and real usage.">
+  <link rel="stylesheet" href="{internal_url('/assets/styles.css')}">
 </head>
 <body>
   {site_shell_header()}
-  <main class=\"container\">
-    <h1>Find Out If an AI Tool Actually Pays for Itself</h1>
-    <p>This site helps freelancers, creators, and small teams estimate whether popular AI tools are actually worth the monthly cost.</p>
 
-    <h2>How It Works</h2>
-    <p>Each calculator combines a tool's current price with your own hourly value and estimated time savings. Instead of relying on hype, you can run the numbers for your real workflow.</p>
-    <p><a href=\"{internal_url('/methodology/')}\">Read the methodology</a></p>
+  <main class="container">
+    <section class="hero">
+      <h1>Will this AI tool actually pay for itself in your week?</h1>
+      <p>Run the numbers instead of trusting hype. Each calculator uses <strong>your</strong> hourly rate + realistic time-savings estimates to show net gain or loss — so you can decide with clarity instead of FOMO.</p>
+    </section>
 
-    <h2>Featured Calculators</h2>
-    <ul>
-      {tool_items}
-    </ul>
+    <section class="card how-it-works">
+      <h2>How It Works – 3 Steps</h2>
+      <ol>
+        <li>Enter your real hourly value (what an extra focused hour is actually worth to you).</li>
+        <li>Estimate weekly hours saved — use conservative, moderate, or aggressive ranges provided.</li>
+        <li>See instant monthly & annual net gain/loss + plain-English verdict.</li>
+      </ol>
+      <p><strong>Important:</strong> Results are only as good as your assumptions. Test multiple scenarios. Read the <a href="{internal_url('/methodology/')}">methodology</a> to understand how we calculate value.</p>
+      <p class="small-note">Pricing references were checked recently, but software pricing changes fast. Always verify on the official site before subscribing.</p>
+    </section>
 
-    <h2>Featured Reviews</h2>
-    <ul>
-      {review_items}
-    </ul>
+    <section>
+      <h2>Featured Calculators</h2>
+      <ul class="featured-list">
+        {tool_items}
+      </ul>
+      <p class="more-link"><a href="{internal_url('/tools/')}">See all tools →</a></p>
+    </section>
 
-    <h2>Featured Comparisons</h2>
-    <ul>
-      {comparison_items}
-    </ul>
+    <section>
+      <h2>Featured Reviews</h2>
+      <ul class="featured-list">
+        {review_items}
+      </ul>
+    </section>
+
+    <section>
+      <h2>Head-to-Head Comparisons</h2>
+      <ul class="featured-list">
+        {comparison_items}
+      </ul>
+    </section>
+
+    <section class="card trust-callout">
+      <h2>Why trust these calculators?</h2>
+      <p>We focus on <em>your</em> time value — not generic hype. Every tool page includes realistic ranges, category-specific guidance, and clear warnings about when results overstate value. No magic multipliers. Just math + honest context.</p>
+      <p><a href="{internal_url('/methodology/')}">Read full methodology →</a></p>
+    </section>
   </main>
+
   {site_shell_footer()}
 </body>
 </html>
@@ -290,17 +344,13 @@ def main():
     root = project_root()
     tools_list = load_tools()
     comparisons = load_comparisons()
-    template = load_template()
+    calc_template = load_template("calculator.html")
 
     valid_tools = []
     seen_slugs = set()
     for tool in tools_list:
-        valid, error = validate_tool(tool)
-        if not valid:
-            print(f"Skipped invalid tool '{tool.get('name', 'unknown')}': {error}")
-            continue
-        if tool["slug"] in seen_slugs:
-            print(f"Skipped duplicate slug '{tool['slug']}'")
+        if "slug" not in tool or tool["slug"] in seen_slugs:
+            print(f"Skipping invalid/duplicate tool: {tool.get('name', 'unknown')}")
             continue
         seen_slugs.add(tool["slug"])
         valid_tools.append(tool)
@@ -310,13 +360,14 @@ def main():
     for tool in valid_tools:
         calc_dir = tools_dir / f'{tool["slug"]}-worth-it-calculator'
         calc_dir.mkdir(parents=True, exist_ok=True)
-        content = generate_calculator_page(tool, valid_tools, template)
+        content = generate_calculator_page(tool, valid_tools, calc_template)
         (calc_dir / "index.html").write_text(content, encoding="utf-8")
 
     (tools_dir / "index.html").write_text(generate_hub_page(valid_tools), encoding="utf-8")
     (root / "index.html").write_text(generate_homepage(valid_tools, comparisons), encoding="utf-8")
     (root / "sitemap.xml").write_text(generate_sitemap(valid_tools, comparisons), encoding="utf-8")
-    print(f"Generated {len(valid_tools)} calculator pages.")
+
+    print(f"Generated/updated {len(valid_tools)} calculator pages + homepage + hub + sitemap.")
 
 
 if __name__ == "__main__":
