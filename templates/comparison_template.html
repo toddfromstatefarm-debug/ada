@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title}</title>
     <meta name="description" content="{meta_description}">
-    
+    <link rel="stylesheet" href="{stylesheet_url}">
     <style>
         .comparison-grid {{
             display: grid;
@@ -40,17 +40,16 @@
             }}
         }}
     </style>
-    <link rel="stylesheet" href="/ada/assets/styles.css">
 </head>
 <body>
     <header>
         <div class="container">
-            <h1><a href="/ada/" >AI Productivity Calculators</a></h1>
+            <h1><a href="{home_url}">AI Productivity Calculators</a></h1>
             <nav>
-                <a href="/ada/" >Home</a>
-                <a href="/ada/tools/">Tools</a>
-                <a href="/ada/about/">About</a>
-                <a href="/ada/methodology/">Methodology</a>
+                <a href="{home_url}">Home</a>
+                <a href="{tools_url}">Tools</a>
+                <a href="{about_url}">About</a>
+                <a href="{methodology_url}">Methodology</a>
             </nav>
         </div>
     </header>
@@ -95,24 +94,20 @@
         <h2>Related Calculators</h2>
         <ul>{related_links}</ul>
 
-        <p class="disclosure">Affiliate links may earn commission at no extra cost to you. <a href="/ada/disclosure/">Full disclosure</a>.</p>
+        <p class="disclosure">Affiliate links may earn commission at no extra cost to you. <a href="{disclosure_url}">Full disclosure</a>.</p>
     </main>
 
     <footer>
         <div class="container">
             <ul>
-                <li><a href="/ada/about/">About</a></li>
-                <li><a href="/ada/contact/">Contact</a></li>
-                <li><a href="/ada/privacy/">Privacy</a></li>
-                <li><a href="/ada/disclosure/">Disclosure</a></li>
-                <li><a href="/ada/methodology/">Methodology</a></li>
+                <li><a href="{about_url}">About</a></li>
+                <li><a href="{contact_url}">Contact</a></li>
+                <li><a href="{privacy_url}">Privacy</a></li>
+                <li><a href="{disclosure_url}">Disclosure</a></li>
+                <li><a href="{methodology_url}">Methodology</a></li>
             </ul>
             <p>© 2026 AI Productivity Calculators. All rights reserved.</p>
         </div>
     </footer>
 </body>
 </html>
-
-
-
-

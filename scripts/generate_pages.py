@@ -7,16 +7,15 @@ SITE_BASE_PATH = "/ada"
 SITE_ROOT_URL = "https://toddfromstatefarm-debug.github.io/ada"
 
 
-def site_path(path: str) -> str:
-    if not path.startswith("/"):
-        path = "/" + path
-    return f"{SITE_BASE_PATH}{path}"
+def internal_url(path: str) -> str:
+    path = "/" + path.lstrip("/")
+    return f"{SITE_BASE_PATH}{path}" if SITE_BASE_PATH else path
 
 
-def site_url(path: str) -> str:
-    if not path.startswith("/"):
-        path = "/" + path
+def absolute_url(path: str) -> str:
+    path = "/" + path.lstrip("/")
     return f"{SITE_ROOT_URL}{path}"
+
 
 def project_root() -> Path:
     return Path(__file__).resolve().parent.parent
@@ -117,9 +116,34 @@ def build_related_tools(tools_list, current_tool):
     items = []
     for tool in related[:3]:
         name = html.escape(tool["name"])
-        href = site_path(f'/tools/{tool["slug"]}-worth-it-calculator/')
+        href = internal_url(f'/tools/{tool["slug"]}-worth-it-calculator/')
         items.append(f'<li><a href="{href}">{name} Calculator</a></li>')
     return "\n".join(items)
+
+
+def site_shell_header() -> str:
+    return (
+        f'<header class="site-header"><div class="container header-inner">'
+        f'<a class="brand" href="{internal_url("/")}">AI Productivity Calculators</a>'
+        f'<nav class="site-nav">'
+        f'<a href="{internal_url("/")}">Home</a>'
+        f'<a href="{internal_url("/tools/")}">Tools</a>'
+        f'<a href="{internal_url("/about/")}">About</a>'
+        f'<a href="{internal_url("/methodology/")}">Methodology</a>'
+        f'</nav></div></header>'
+    )
+
+
+def site_shell_footer() -> str:
+    return (
+        f'<footer class="site-footer"><div class="container"><ul class="footer-links">'
+        f'<li><a href="{internal_url("/about/")}">About</a></li>'
+        f'<li><a href="{internal_url("/contact/")}">Contact</a></li>'
+        f'<li><a href="{internal_url("/privacy/")}">Privacy</a></li>'
+        f'<li><a href="{internal_url("/disclosure/")}">Disclosure</a></li>'
+        f'<li><a href="{internal_url("/methodology/")}">Methodology</a></li>'
+        f'</ul><p class="small">&copy; 2026 AI Productivity Calculators. All rights reserved.</p></div></footer>'
+    )
 
 
 def generate_calculator_page(tool, tools_list, template):
@@ -142,56 +166,41 @@ def generate_calculator_page(tool, tools_list, template):
         best_for=best_for,
         not_ideal_for=not_ideal_for,
         related_tools=build_related_tools(tools_list, tool),
+        stylesheet_url=internal_url("/assets/styles.css"),
+        home_url=internal_url("/"),
+        tools_url=internal_url("/tools/"),
+        about_url=internal_url("/about/"),
+        methodology_url=internal_url("/methodology/"),
+        contact_url=internal_url("/contact/"),
+        privacy_url=internal_url("/privacy/"),
+        disclosure_url=internal_url("/disclosure/"),
     )
 
 
 def generate_hub_page(tools_list):
     items = []
     for tool in sorted(tools_list, key=lambda t: t["name"].lower()):
-        items.append(f'<li><a href="{SITE_BASE_PATH}/tools/{tool["slug"]}-worth-it-calculator/">{html.escape(tool["name"])} Calculator</a></li>')
+        items.append(f'<li><a href="{internal_url(f"/tools/{tool["slug"]}-worth-it-calculator/")}">{html.escape(tool["name"])} Calculator</a></li>')
     joined = "\n      ".join(items)
     return f"""<!DOCTYPE html>
-<html lang="en">
+<html lang=\"en\">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset=\"UTF-8\">
+  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
   <title>All Tools - AI Productivity Calculators</title>
-  <meta name="description" content="Browse all AI productivity calculators on the site.">
-  <link rel="stylesheet" href="{SITE_BASE_PATH}/assets/styles.css">
+  <meta name=\"description\" content=\"Browse all AI productivity calculators on the site.\">
+  <link rel=\"stylesheet\" href=\"{internal_url('/assets/styles.css')}\">
 </head>
 <body>
-  <header>
-    <div class="container">
-      <h1><a href="{SITE_BASE_PATH}/" >AI Productivity Calculators</a></h1>
-      <nav>
-        <a href="{SITE_BASE_PATH}/" >Home</a>
-        <a href="{SITE_BASE_PATH}/tools/">Tools</a>
-        <a href="{SITE_BASE_PATH}/about/">About</a>
-        <a href="{SITE_BASE_PATH}/methodology/">Methodology</a>
-      </nav>
-    </div>
-  </header>
-
-  <main class="container">
+  {site_shell_header()}
+  <main class=\"container\">
     <h1>All Tools</h1>
     <p>Browse every calculator on the site and quickly estimate whether a given tool is worth the monthly cost for your workflow.</p>
     <ul>
       {joined}
     </ul>
   </main>
-
-  <footer>
-    <div class="container">
-      <ul>
-        <li><a href="{SITE_BASE_PATH}/about/">About</a></li>
-        <li><a href="{SITE_BASE_PATH}/contact/">Contact</a></li>
-        <li><a href="{SITE_BASE_PATH}/privacy/">Privacy</a></li>
-        <li><a href="{SITE_BASE_PATH}/disclosure/">Disclosure</a></li>
-        <li><a href="{SITE_BASE_PATH}/methodology/">Methodology</a></li>
-      </ul>
-      <p>© 2026 AI Productivity Calculators. All rights reserved.</p>
-    </div>
-  </footer>
+  {site_shell_footer()}
 </body>
 </html>
 """
@@ -202,46 +211,35 @@ def generate_homepage(tools_list, comparisons):
     featured_reviews = tools_list[:5]
     featured_comparisons = comparisons[:5]
     tool_items = "\n      ".join(
-        f'<li><a href="{SITE_BASE_PATH}/tools/{t["slug"]}-worth-it-calculator/">{html.escape(t["name"])} Calculator</a></li>'
+        f'<li><a href="{internal_url(f"/tools/{t["slug"]}-worth-it-calculator/")}">{html.escape(t["name"])} Calculator</a></li>'
         for t in featured_tools
     )
     review_items = "\n      ".join(
-        f'<li><a href="{SITE_BASE_PATH}/pages/{t["slug"]}-review/">{html.escape(t["name"])} Review</a></li>'
+        f'<li><a href="{internal_url(f"/pages/{t["slug"]}-review/")}">{html.escape(t["name"])} Review</a></li>'
         for t in featured_reviews
     )
     comparison_items = "\n      ".join(
-        f'<li><a href="{SITE_BASE_PATH}/compare/{c["slug"]}/">{html.escape(c["slug"].replace("-", " ").title())}</a></li>'
+        f'<li><a href="{internal_url(f"/compare/{c["slug"]}/")}">{html.escape(c["slug"].replace("-", " ").title())}</a></li>'
         for c in featured_comparisons
     )
     return f"""<!DOCTYPE html>
-<html lang="en">
+<html lang=\"en\">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset=\"UTF-8\">
+  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
   <title>AI Productivity Calculators</title>
-  <meta name="description" content="Free calculators, reviews, and comparisons to help you decide whether AI productivity tools are worth the money.">
-  <link rel="stylesheet" href="{SITE_BASE_PATH}/assets/styles.css">
+  <meta name=\"description\" content=\"Free calculators, reviews, and comparisons to help you decide whether AI productivity tools are worth the money.\">
+  <link rel=\"stylesheet\" href=\"{internal_url('/assets/styles.css')}\">
 </head>
 <body>
-  <header>
-    <div class="container">
-      <h1><a href="{SITE_BASE_PATH}/" >AI Productivity Calculators</a></h1>
-      <nav>
-        <a href="{SITE_BASE_PATH}/" >Home</a>
-        <a href="{SITE_BASE_PATH}/tools/">Tools</a>
-        <a href="{SITE_BASE_PATH}/about/">About</a>
-        <a href="{SITE_BASE_PATH}/methodology/">Methodology</a>
-      </nav>
-    </div>
-  </header>
-
-  <main class="container">
+  {site_shell_header()}
+  <main class=\"container\">
     <h1>Find Out If an AI Tool Actually Pays for Itself</h1>
     <p>This site helps freelancers, creators, and small teams estimate whether popular AI tools are actually worth the monthly cost.</p>
 
     <h2>How It Works</h2>
     <p>Each calculator combines a tool's current price with your own hourly value and estimated time savings. Instead of relying on hype, you can run the numbers for your real workflow.</p>
-    <p><a href="{SITE_BASE_PATH}/methodology/">Read the methodology</a></p>
+    <p><a href=\"{internal_url('/methodology/')}\">Read the methodology</a></p>
 
     <h2>Featured Calculators</h2>
     <ul>
@@ -258,37 +256,26 @@ def generate_homepage(tools_list, comparisons):
       {comparison_items}
     </ul>
   </main>
-
-  <footer>
-    <div class="container">
-      <ul>
-        <li><a href="{SITE_BASE_PATH}/about/">About</a></li>
-        <li><a href="{SITE_BASE_PATH}/contact/">Contact</a></li>
-        <li><a href="{SITE_BASE_PATH}/privacy/">Privacy</a></li>
-        <li><a href="{SITE_BASE_PATH}/disclosure/">Disclosure</a></li>
-        <li><a href="{SITE_BASE_PATH}/methodology/">Methodology</a></li>
-      </ul>
-      <p>© 2026 AI Productivity Calculators. All rights reserved.</p>
-    </div>
-  </footer>
+  {site_shell_footer()}
 </body>
 </html>
 """
 
 
-def generate_sitemap(tools_list, comparisons=None):
+def generate_sitemap(tools_list, comparisons):
     now = datetime.date.today().isoformat()
     urls = [
-        {"loc": f"{SITE_ROOT_URL}/", "lastmod": now, "priority": "1.0"},
-        {"loc": f"{SITE_ROOT_URL}/tools/", "lastmod": now, "priority": "0.9"},
+        {"loc": absolute_url("/"), "lastmod": now, "priority": "1.0"},
+        {"loc": absolute_url("/tools/"), "lastmod": now, "priority": "0.9"},
     ]
     for tool in tools_list:
-        urls.append({"loc": f'{SITE_ROOT_URL}/tools/{tool["slug"]}-worth-it-calculator/', "lastmod": now, "priority": "0.8"})
-        urls.append({"loc": f'{SITE_ROOT_URL}/pages/{tool["slug"]}-review/', "lastmod": now, "priority": "0.7"})
-    if comparisons:
-        for comp in comparisons:
-            urls.append({"loc": f'{SITE_ROOT_URL}/compare/{comp["slug"]}/', "lastmod": now, "priority": "0.75"})
-    sitemap = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+        urls.append({"loc": absolute_url(f'/tools/{tool["slug"]}-worth-it-calculator/'), "lastmod": now, "priority": "0.8"})
+        urls.append({"loc": absolute_url(f'/pages/{tool["slug"]}-review/'), "lastmod": now, "priority": "0.7"})
+    for comp in comparisons:
+        urls.append({"loc": absolute_url(f'/compare/{comp["slug"]}/'), "lastmod": now, "priority": "0.75"})
+
+    sitemap = ['<?xml version="1.0" encoding="UTF-8"?>']
+    sitemap.append('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')
     for entry in urls:
         sitemap.append("  <url>")
         sitemap.append(f'    <loc>{html.escape(entry["loc"])}</loc>')

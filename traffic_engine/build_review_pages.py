@@ -7,23 +7,24 @@ SITE_BASE_PATH = "/ada"
 SITE_ROOT_URL = "https://toddfromstatefarm-debug.github.io/ada"
 
 
-def site_path(path: str) -> str:
-    if not path.startswith("/"):
-        path = "/" + path
-    return f"{SITE_BASE_PATH}{path}"
+def internal_url(path: str) -> str:
+    path = "/" + path.lstrip("/")
+    return f"{SITE_BASE_PATH}{path}" if SITE_BASE_PATH else path
 
 
-def site_url(path: str) -> str:
-    if not path.startswith("/"):
-        path = "/" + path
+def absolute_url(path: str) -> str:
+    path = "/" + path.lstrip("/")
     return f"{SITE_ROOT_URL}{path}"
+
 
 def project_root() -> Path:
     return Path(__file__).resolve().parent.parent
 
+
 def load_tools():
     with (project_root() / "data" / "tools.json").open("r", encoding="utf-8") as f:
         return json.load(f)
+
 
 def validate_tool(tool):
     required = ["name", "slug", "category"]
@@ -31,6 +32,7 @@ def validate_tool(tool):
         if field not in tool:
             return False, f"Missing keys: {field}"
     return True, ""
+
 
 def get_category_copy(category):
     copies = {
@@ -41,6 +43,7 @@ def get_category_copy(category):
     }
     return copies.get(category, {"best_for": "Professionals looking to save time in recurring workflows.", "not_ideal_for": "Users with minimal repetitive work or low software budgets."})
 
+
 def build_related_tools(tools_list, current_tool):
     current_slug = current_tool["slug"]
     current_category = current_tool.get("category", "")
@@ -49,10 +52,12 @@ def build_related_tools(tools_list, current_tool):
     if len(related) < 3:
         fallback = sorted([t for t in tools_list if t["slug"] != current_slug and t["slug"] not in {r["slug"] for r in related}], key=lambda t: t["name"].lower())
         related.extend(fallback[: 3 - len(related)])
-    return "\n".join(f'<li><a href="{SITE_BASE_PATH}/pages/{tool["slug"]}-review/">{html.escape(tool["name"])} Review</a></li>' for tool in related[:3])
+    return "\n".join(f'<li><a href="{internal_url(f"/pages/{tool["slug"]}-review/")}">{html.escape(tool["name"])} Review</a></li>' for tool in related[:3])
+
 
 def render_list_items(items):
     return "\n".join(f"<li>{html.escape(item)}</li>" for item in items)
+
 
 def render_review_page(tool, tools_list, template):
     now = datetime.date.today()
@@ -69,25 +74,35 @@ def render_review_page(tool, tools_list, template):
         cons=render_list_items(tool.get("cons", ["Requires setup and habit changes", "Recurring monthly cost", "Real value depends on usage"])),
         monthly_price=tool.get("monthly_price", 0),
         pricing_note=html.escape(tool.get("pricing_note", "Check the official site for current pricing and plan details.")),
-        calculator_path=site_path(f'/tools/{tool["slug"]}-worth-it-calculator/'),
+        calculator_path=internal_url(f'/tools/{tool["slug"]}-worth-it-calculator/'),
         tool_name=html.escape(tool["name"]),
         affiliate_link=html.escape(tool.get("affiliate_link", "#"), quote=True),
         related_tools=build_related_tools(tools_list, tool),
         last_updated=now.strftime("%B %Y"),
+        stylesheet_url=internal_url("/assets/styles.css"),
+        home_url=internal_url("/"),
+        tools_url=internal_url("/tools/"),
+        about_url=internal_url("/about/"),
+        methodology_url=internal_url("/methodology/"),
+        contact_url=internal_url("/contact/"),
+        privacy_url=internal_url("/privacy/"),
+        disclosure_url=internal_url("/disclosure/"),
     )
+
 
 def generate_sitemap(tools_list):
     now = datetime.date.today().isoformat()
-    urls = [{"loc": f"{SITE_ROOT_URL}/", "lastmod": now, "priority": "1.0"}, {"loc": f"{SITE_ROOT_URL}/tools/", "lastmod": now, "priority": "0.9"}]
+    urls = [{"loc": absolute_url("/"), "lastmod": now, "priority": "1.0"}, {"loc": absolute_url("/tools/"), "lastmod": now, "priority": "0.9"}]
     for tool in tools_list:
-        urls.append({"loc": f'{SITE_ROOT_URL}/tools/{tool["slug"]}-worth-it-calculator/', "lastmod": now, "priority": "0.8"})
+        urls.append({"loc": absolute_url(f'/tools/{tool["slug"]}-worth-it-calculator/'), "lastmod": now, "priority": "0.8"})
     for tool in tools_list:
-        urls.append({"loc": f'{SITE_ROOT_URL}/pages/{tool["slug"]}-review/', "lastmod": now, "priority": "0.7"})
+        urls.append({"loc": absolute_url(f'/pages/{tool["slug"]}-review/'), "lastmod": now, "priority": "0.7"})
     out = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for entry in urls:
         out.extend(["  <url>", f'    <loc>{html.escape(entry["loc"])}</loc>', f'    <lastmod>{entry["lastmod"]}</lastmod>', f'    <priority>{entry["priority"]}</priority>', "  </url>"])
     out.append("</urlset>")
     return "\n".join(out) + "\n"
+
 
 def main():
     root = project_root()
@@ -101,6 +116,7 @@ def main():
         (review_dir / "index.html").write_text(render_review_page(tool, tools_list, template), encoding="utf-8")
     (root / "sitemap.xml").write_text(generate_sitemap(tools_list), encoding="utf-8")
     print(f"Generated {len(tools_list)} review pages")
+
 
 if __name__ == "__main__":
     main()

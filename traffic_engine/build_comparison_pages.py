@@ -7,16 +7,15 @@ SITE_BASE_PATH = "/ada"
 SITE_ROOT_URL = "https://toddfromstatefarm-debug.github.io/ada"
 
 
-def site_path(path: str) -> str:
-    if not path.startswith("/"):
-        path = "/" + path
-    return f"{SITE_BASE_PATH}{path}"
+def internal_url(path: str) -> str:
+    path = "/" + path.lstrip("/")
+    return f"{SITE_BASE_PATH}{path}" if SITE_BASE_PATH else path
 
 
-def site_url(path: str) -> str:
-    if not path.startswith("/"):
-        path = "/" + path
+def absolute_url(path: str) -> str:
+    path = "/" + path.lstrip("/")
     return f"{SITE_ROOT_URL}{path}"
+
 
 def project_root() -> Path:
     return Path(__file__).resolve().parent.parent
@@ -63,10 +62,7 @@ def build_tool_highlights(tool):
     price = tool.get("monthly_price", 0)
     hours = tool.get("default_hours_saved", 0)
     features = tool.get("features", [])[:2]
-    items = [
-        f"${price}/month",
-        f"About {hours} hours/week of reported savings",
-    ]
+    items = [f"${price}/month", f"About {hours} hrs/week of reported savings"]
     items.extend(features)
     return render_list_items(items)
 
@@ -76,7 +72,7 @@ def build_related_links(tools_list, tool_a_slug, tool_b_slug):
     for tool in sorted(tools_list, key=lambda t: t["name"].lower()):
         if tool["slug"] in (tool_a_slug, tool_b_slug):
             continue
-        related.append(f'<li><a href="{SITE_BASE_PATH}/tools/{tool["slug"]}-worth-it-calculator/">{html.escape(tool["name"])} Calculator</a></li>')
+        related.append(f'<li><a href="{internal_url(f"/tools/{tool["slug"]}-worth-it-calculator/")}">{html.escape(tool["name"])} Calculator</a></li>')
         if len(related) >= 4:
             break
     return "\n".join(related)
@@ -101,36 +97,37 @@ def render_comparison_page(comp, tools_list, template):
         tool_b_name=html.escape(tool_b["name"]),
         tool_a_highlights=build_tool_highlights(tool_a),
         tool_b_highlights=build_tool_highlights(tool_b),
-        tool_a_calculator_path=f"/tools/{tool_a['slug']}-worth-it-calculator/",
-        tool_b_calculator_path=f"/tools/{tool_b['slug']}-worth-it-calculator/",
+        tool_a_calculator_path=internal_url(f'/tools/{tool_a["slug"]}-worth-it-calculator/'),
+        tool_b_calculator_path=internal_url(f'/tools/{tool_b["slug"]}-worth-it-calculator/'),
         tool_a_affiliate_link=html.escape(tool_a.get("affiliate_link", "#"), quote=True),
         tool_b_affiliate_link=html.escape(tool_b.get("affiliate_link", "#"), quote=True),
         verdict=html.escape(comp["verdict"]),
         best_for=html.escape(comp["best_for"]),
         when_to_choose=html.escape(comp["when_to_choose"]),
         related_links=build_related_links(tools_list, comp["tool_a_slug"], comp["tool_b_slug"]),
+        stylesheet_url=internal_url("/assets/styles.css"),
+        home_url=internal_url("/"),
+        tools_url=internal_url("/tools/"),
+        about_url=internal_url("/about/"),
+        methodology_url=internal_url("/methodology/"),
+        contact_url=internal_url("/contact/"),
+        privacy_url=internal_url("/privacy/"),
+        disclosure_url=internal_url("/disclosure/"),
     )
 
 
 def write_sitemap(tools_list, comparisons):
     now = datetime.date.today().isoformat()
-    urls = [
-        {"loc": f"{SITE_ROOT_URL}/", "lastmod": now, "priority": "1.0"},
-        {"loc": f"{SITE_ROOT_URL}/tools/", "lastmod": now, "priority": "0.9"},
-    ]
+    urls = [{"loc": absolute_url("/"), "lastmod": now, "priority": "1.0"}, {"loc": absolute_url("/tools/"), "lastmod": now, "priority": "0.9"}]
     for tool in tools_list:
-        urls.append({"loc": f"{SITE_ROOT_URL}/tools/{tool['slug']}-worth-it-calculator/", "lastmod": now, "priority": "0.8"})
+        urls.append({"loc": absolute_url(f'/tools/{tool["slug"]}-worth-it-calculator/'), "lastmod": now, "priority": "0.8"})
     for tool in tools_list:
-        urls.append({"loc": f"{SITE_ROOT_URL}/pages/{tool['slug']}-review/", "lastmod": now, "priority": "0.7"})
+        urls.append({"loc": absolute_url(f'/pages/{tool["slug"]}-review/'), "lastmod": now, "priority": "0.7"})
     for comp in comparisons:
-        urls.append({"loc": f"{SITE_ROOT_URL}/compare/{comp['slug']}/", "lastmod": now, "priority": "0.75"})
+        urls.append({"loc": absolute_url(f'/compare/{comp["slug"]}/'), "lastmod": now, "priority": "0.75"})
     lines = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for u in urls:
-        lines.append("  <url>")
-        lines.append(f"    <loc>{html.escape(u['loc'])}</loc>")
-        lines.append(f"    <lastmod>{u['lastmod']}</lastmod>")
-        lines.append(f"    <priority>{u['priority']}</priority>")
-        lines.append("  </url>")
+        lines.extend(["  <url>", f"    <loc>{html.escape(u['loc'])}</loc>", f"    <lastmod>{u['lastmod']}</lastmod>", f"    <priority>{u['priority']}</priority>", "  </url>"])
     lines.append("</urlset>")
     (project_root() / "sitemap.xml").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
@@ -139,10 +136,10 @@ def main():
     root = project_root()
     tools_list = load_tools()
     comparisons = load_comparisons()
-    tools_by_slug = {t["slug"]: t for t in tools_list}
     template = (root / "templates" / "comparison_template.html").read_text(encoding="utf-8")
     compare_root = root / "compare"
     compare_root.mkdir(parents=True, exist_ok=True)
+    tools_by_slug = {t["slug"]: t for t in tools_list}
 
     generated = 0
     skipped = 0
