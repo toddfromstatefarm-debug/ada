@@ -25,7 +25,20 @@
     "best_for_override": "Freelancers and operators who want to protect focus time without handing over total control of their calendar.",
     "not_ideal_for_override": "Users who want a heavy task-manager plus scheduler in one tool or who barely rely on calendar blocking.",
     "pricing_note": "Pricing varies by plan. Check the official site for current free, paid, and team options.",
-    "review_summary": "Reclaim.ai stands out when the real problem is protecting time, not just stuffing more tasks into the calendar."
+    "review_summary": "Reclaim.ai stands out when the real problem is protecting time, not just stuffing more tasks into the calendar.",
+    "pricing_basis": "Uses the common individual paid tier as a working baseline. Annual billing, add-ons, team pricing, and promotions may differ. Always verify on reclaim.ai/pricing.",
+    "hours_saved_factors": [
+      "manual calendar cleanup and rescheduling",
+      "protecting focus blocks from being overrun",
+      "automatic habit and routine scheduling",
+      "adding smart buffers around meetings"
+    ],
+    "conservative_hours": "1–2",
+    "moderate_hours": "3–5",
+    "aggressive_hours": "6–9",
+    "hourly_rate_guidance": "Freelancers: use your real client billing rate (after expenses if you want to be conservative). Salaried: annual take-home ÷ 2080 workable hours. Side hustlers: realistic replacement cost of your time.",
+    "calculator_intro": "Reclaim.ai reduces manual calendar juggling and protects deep work time. This calculator estimates whether those reclaimed hours are worth more than the subscription cost in your real week.",
+    "interpretation_note": "Positive numbers only matter if you consistently let Reclaim protect focus time and handle routine rescheduling. If you mostly ignore its suggestions, actual savings will be much lower."
   },
   {
     "name": "Motion",
@@ -53,7 +66,20 @@
     "best_for_override": "Consultants, founders, and busy freelancers who want the tool to actively plan their day for them.",
     "not_ideal_for_override": "Users with very predictable routines or people who do not want software constantly rearranging their schedule.",
     "pricing_note": "Plans and features can shift. Verify current personal and team pricing directly before deciding.",
-    "review_summary": "Motion is best when planning itself has become a tax on your week."
+    "review_summary": "Motion is best when planning itself has become a tax on your week.",
+    "pricing_basis": "Uses the common individual Pro AI tier as a working baseline (often lower with annual billing). Monthly rates and team pricing may differ. Always verify on usemotion.com/pricing.",
+    "hours_saved_factors": [
+      "daily schedule building",
+      "automatic reprioritization when deadlines move",
+      "task-to-calendar mapping",
+      "avoiding overcommitment decisions"
+    ],
+    "conservative_hours": "1–3",
+    "moderate_hours": "4–6",
+    "aggressive_hours": "7–12",
+    "hourly_rate_guidance": "Freelancers: client rate after expenses. Salaried: salary ÷ 2080. Founders/solopreneurs: what your most valuable hour actually generates.",
+    "calculator_intro": "Motion tries to eliminate most of your daily planning effort by turning tasks into an intelligent calendar. Use this to see if the time it saves outweighs the cost.",
+    "interpretation_note": "Results depend heavily on whether you trust Motion's scheduling decisions and follow them most days. High manual overrides = much lower real savings."
   },
   {
     "name": "Notion AI",
@@ -81,7 +107,20 @@
     "best_for_override": "Writers, creators, and operators who already live inside Notion and want light AI help without switching tabs.",
     "not_ideal_for_override": "People who do not use Notion regularly or who want a more powerful standalone writing assistant.",
     "pricing_note": "Pricing depends on your Notion plan and AI add-on availability. Always verify current Notion pricing.",
-    "review_summary": "Notion AI is strongest as an in-workspace assistant, not as a giant all-purpose AI platform."
+    "review_summary": "Notion AI is strongest as an in-workspace assistant, not as a giant all-purpose AI platform.",
+    "pricing_basis": "AI features are now integrated into higher plans or available as an add-on. Exact cost varies by base plan. Always verify current structure on notion.so/pricing.",
+    "hours_saved_factors": [
+      "turning rough notes into clean summaries",
+      "quick rewrites and restructuring",
+      "brainstorming and outlining",
+      "extracting action items from meeting notes"
+    ],
+    "conservative_hours": "1–2",
+    "moderate_hours": "2.5–4",
+    "aggressive_hours": "5–8",
+    "hourly_rate_guidance": "Creators/writers: what you charge per hour of final output. Salaried: salary ÷ 2080. If unsure, start conservative ($40–60).",
+    "calculator_intro": "Notion AI helps most when you're already living in Notion. This calculator checks whether the small-but-frequent time savings justify the add-on cost.",
+    "interpretation_note": "Savings are very usage-dependent. If you rarely use Notion AI features, even a positive number here won't reflect reality."
   },
   {
     "name": "Jasper",
@@ -109,7 +148,20 @@
     "best_for_override": "Marketing teams, agencies, and businesses producing a steady stream of branded written content.",
     "not_ideal_for_override": "Individuals who just want a cheaper general AI tool for occasional writing help.",
     "pricing_note": "Jasper pricing changes by plan and team size. Check current creator and business tiers before subscribing.",
-    "review_summary": "Jasper makes the most sense when AI writing is part of a repeatable marketing process."
+    "review_summary": "Jasper makes the most sense when AI writing is part of a repeatable marketing process.",
+    "pricing_basis": "Uses the common Pro plan tier as a working baseline. Per-seat pricing, annual discounts, and team plans may differ. Always verify on jasper.ai/pricing.",
+    "hours_saved_factors": [
+      "first-draft generation for blogs/ads/emails",
+      "creating multiple variants quickly",
+      "adapting content to brand voice",
+      "reworking existing copy"
+    ],
+    "conservative_hours": "2–4",
+    "moderate_hours": "5–8",
+    "aggressive_hours": "10–15",
+    "hourly_rate_guidance": "Marketing freelancers: your hourly project rate. Agencies: blended team rate. Solo casual users: be very conservative ($30–50).",
+    "calculator_intro": "Jasper accelerates repeatable content workflows. This calculator helps determine if the speed gain covers the relatively high monthly cost.",
+    "interpretation_note": "High savings require regular, structured content output. Occasional or one-off use usually produces much lower real value."
   },
   {
     "name": "ClickUp AI",
@@ -137,7 +189,20 @@
     "best_for_override": "Teams and managers already operating inside ClickUp who want to cut down repetitive project admin.",
     "not_ideal_for_override": "Users who do not already like ClickUp or who want a simple standalone AI productivity tool.",
     "pricing_note": "AI pricing may depend on your ClickUp plan and workspace setup. Confirm current add-on details before buying.",
-    "review_summary": "ClickUp AI is a leverage add-on, not a magic fix. It pays off when the underlying ClickUp workflow is already active and valuable."
+    "review_summary": "ClickUp AI is a leverage add-on, not a magic fix. It pays off when the underlying ClickUp workflow is already active and valuable.",
+    "pricing_basis": "AI features are now part of higher bundles or available as add-ons with usage-based elements. Exact cost varies by plan. Always verify on clickup.com/pricing.",
+    "hours_saved_factors": [
+      "writing clearer task descriptions",
+      "summarizing updates and comments",
+      "generating status reports",
+      "automating repetitive project admin"
+    ],
+    "conservative_hours": "1–2",
+    "moderate_hours": "3–5",
+    "aggressive_hours": "6–10",
+    "hourly_rate_guidance": "Team leads/managers: your effective hourly value. Freelancers: client rate. Solo users: conservative estimate of admin time value.",
+    "calculator_intro": "ClickUp AI saves time mostly inside an already-active ClickUp workspace. This calculator checks if the small-but-frequent gains justify the add-on.",
+    "interpretation_note": "Almost all value disappears if your team doesn't consistently use ClickUp. Low adoption = near-zero savings."
   },
   {
     "name": "Todoist AI",
@@ -165,7 +230,20 @@
     "best_for_override": "Individuals who like lightweight task management and want a small AI boost rather than a full operating system.",
     "not_ideal_for_override": "Power users expecting major automation or teams needing deeper workflow intelligence.",
     "pricing_note": "Check the current Todoist pricing and AI availability before relying on older plan details.",
-    "review_summary": "Todoist AI feels like a refinement tool more than a category-defining productivity leap. It works best when simplicity is the goal."
+    "review_summary": "Todoist AI feels like a refinement tool more than a category-defining productivity leap. It works best when simplicity is the goal.",
+    "pricing_basis": "Uses the common Pro tier as a working baseline (AI usually included). Annual discounts common. Always verify on todoist.com/pricing.",
+    "hours_saved_factors": [
+      "clarifying vague tasks",
+      "suggesting better prioritization",
+      "grouping similar items",
+      "quick rephrasing of task names"
+    ],
+    "conservative_hours": "0.5–1.5",
+    "moderate_hours": "2–3.5",
+    "aggressive_hours": "4–7",
+    "hourly_rate_guidance": "Personal productivity users: conservative replacement value of your time ($30–70). Freelancers: client rate only if tasks directly billable.",
+    "calculator_intro": "Todoist AI is a lightweight refinement layer. This calculator helps decide whether even modest time savings are worth $4/mo in your routine.",
+    "interpretation_note": "Savings are small and incremental. If your task list is already clean and prioritized, real value may be close to zero."
   },
   {
     "name": "Otter.ai",
@@ -193,7 +271,20 @@
     "best_for_override": "Client-facing professionals, students, and teams that want searchable transcripts instead of relying on memory or scattered notes.",
     "not_ideal_for_override": "People with very few meetings or workflows where recordings and transcripts are not acceptable.",
     "pricing_note": "Pricing and transcription limits can change. Verify the current free and paid plan structure before deciding.",
-    "review_summary": "Otter.ai is easy to justify when meetings create real note-taking or follow-up pain."
+    "review_summary": "Otter.ai is easy to justify when meetings create real note-taking or follow-up pain.",
+    "pricing_basis": "Uses the common individual paid tier as a working baseline. Annual billing often lower. Always verify on otter.ai/pricing.",
+    "hours_saved_factors": [
+      "real-time note taking during calls",
+      "writing post-meeting summaries",
+      "searching / recalling old discussion points",
+      "extracting action items"
+    ],
+    "conservative_hours": "1–2",
+    "moderate_hours": "2.5–4.5",
+    "aggressive_hours": "5–9",
+    "hourly_rate_guidance": "Client-facing roles: your billable or effective hourly rate. Students/salaried: conservative value of focused work time.",
+    "calculator_intro": "Otter.ai saves time mainly for people in frequent meetings. This calculator estimates whether searchable transcripts and summaries are worth the subscription.",
+    "interpretation_note": "Value collapses if you have fewer than 3–4 meaningful meetings per week or don't regularly refer back to transcripts."
   },
   {
     "name": "Fireflies.ai",
@@ -221,7 +312,20 @@
     "best_for_override": "Teams, agencies, and sales-heavy workflows where multiple people benefit from shared meeting intelligence.",
     "not_ideal_for_override": "Solo users who just want a minimal transcript tool without extra workflow layers.",
     "pricing_note": "Check the official pricing for current limits, integrations, and feature differences between tiers.",
-    "review_summary": "Fireflies.ai is more compelling when meetings need to become shared operational knowledge, not just personal notes."
+    "review_summary": "Fireflies.ai is more compelling when meetings need to become shared operational knowledge, not just personal notes.",
+    "pricing_basis": "Uses the common Pro tier as a working baseline. Per-user pricing and team plans may differ. Always verify on fireflies.ai/pricing.",
+    "hours_saved_factors": [
+      "post-meeting recap writing",
+      "action item extraction",
+      "team-wide sharing & alignment",
+      "searching historical meeting content"
+    ],
+    "conservative_hours": "1–2.5",
+    "moderate_hours": "3–5",
+    "aggressive_hours": "6–11",
+    "hourly_rate_guidance": "Sales/client teams: billable rate or effective hourly value. Solo: be conservative unless meetings directly drive revenue.",
+    "calculator_intro": "Fireflies shines in collaborative workflows where meetings produce shared follow-ups. This calculator checks if team time savings justify the cost.",
+    "interpretation_note": "Solo users usually see far less value. Maximum savings require regular meetings + team adoption of the summaries/action items."
   },
   {
     "name": "Writesonic",
@@ -249,7 +353,20 @@
     "best_for_override": "Content marketers, bloggers, and operators trying to speed up first drafts and SEO-focused writing work.",
     "not_ideal_for_override": "Users who expect polished final copy with very little editing or those who need deeper reasoning than draft generation.",
     "pricing_note": "Plan limits and feature access can change. Check the current Writesonic plan details before subscribing.",
-    "review_summary": "Writesonic is strongest as a drafting accelerator. It makes more sense when speed matters more than perfect first-pass quality."
+    "review_summary": "Writesonic is strongest as a drafting accelerator. It makes more sense when speed matters more than perfect first-pass quality.",
+    "pricing_basis": "Uses the common individual/Pro tier as a working baseline. Annual discounts and feature tiers may differ. Always verify on writesonic.com/pricing.",
+    "hours_saved_factors": [
+      "first-draft blog & marketing content",
+      "SEO keyword-integrated outlines",
+      "quick variant generation",
+      "rewriting existing copy for new angles"
+    ],
+    "conservative_hours": "2–3",
+    "moderate_hours": "4–7",
+    "aggressive_hours": "8–14",
+    "hourly_rate_guidance": "Content creators: hourly project rate. Agencies: blended rate. Casual users: stay conservative ($35–60).",
+    "calculator_intro": "Writesonic accelerates content drafting, especially SEO-focused work. This calculator helps decide if the speed justifies the monthly spend.",
+    "interpretation_note": "Real savings require regular content output and tolerance for editing AI drafts. One-off or very occasional use rarely pays off."
   },
   {
     "name": "Sunsama",
@@ -277,6 +394,19 @@
     "best_for_override": "People who want a deliberate daily planning ritual, not just auto-scheduling software.",
     "not_ideal_for_override": "Users who want the system to do everything automatically or who will not use a daily planning workflow consistently.",
     "pricing_note": "Verify current Sunsama pricing and trial details directly, since plan terms may change.",
-    "review_summary": "Sunsama is less about squeezing every minute and more about planning a sustainable day."
+    "review_summary": "Sunsama is less about squeezing every minute and more about planning a sustainable day.",
+    "pricing_basis": "Uses the standard individual subscription as a working baseline. Annual billing often lower. Always verify on sunsama.com/pricing.",
+    "hours_saved_factors": [
+      "realistic daily task scoping",
+      "integrating tasks with calendar reality",
+      "avoiding overcommitment",
+      "reflective end-of-day review"
+    ],
+    "conservative_hours": "1–2.5",
+    "moderate_hours": "3–5",
+    "aggressive_hours": "6–10",
+    "hourly_rate_guidance": "Professionals with high cognitive load: effective hourly value. Planners who bill time: client rate. Start conservative if unsure.",
+    "calculator_intro": "Sunsama emphasizes intentional, sustainable daily planning. This calculator checks whether the clarity and reduced stress justify the premium price.",
+    "interpretation_note": "Almost all value depends on actually doing the daily planning ritual. Skipping days = near-zero savings."
   }
 ]
