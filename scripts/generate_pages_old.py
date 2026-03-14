@@ -140,7 +140,7 @@ def generate_calculator_page(tool, tools_list, template):
         )
     )
 
-    fallback = {
+    fb = {
         "hours_saved_factors": [
             "repetitive workflow steps",
             "manual organization",
@@ -152,10 +152,10 @@ def generate_calculator_page(tool, tools_list, template):
         "aggressive_hours": "6–10",
     }
 
-    conservative = tool.get("conservative_hours", fallback["conservative_hours"])
-    moderate = tool.get("moderate_hours", fallback["moderate_hours"])
-    aggressive = tool.get("aggressive_hours", fallback["aggressive_hours"])
-    factors_list = tool.get("hours_saved_factors", fallback["hours_saved_factors"])
+    conservative = tool.get("conservative_hours", fb["conservative_hours"])
+    moderate = tool.get("moderate_hours", fb["moderate_hours"])
+    aggressive = tool.get("aggressive_hours", fb["aggressive_hours"])
+    factors_list = tool.get("hours_saved_factors", fb["hours_saved_factors"])
     factors_html = format_hours_saved_factors(factors_list)
 
     best_for = html.escape(
@@ -254,8 +254,8 @@ def generate_category_guide_page(guide, tools_list, template):
             )
 
     related_comparisons_html = "".join(
-        f'<li><a href="{internal_url(f"/compare/{comparison_slug}/")}">{comparison_slug.replace("-", " ").title()}</a></li>'
-        for comparison_slug in guide.get("related_comparisons", [])
+        f'<li><a href="{internal_url(f"/compare/{c}/")}">{c.replace("-", " ").title()}</a></li>'
+        for c in guide.get("related_comparisons", [])
     )
 
     return template.format(
@@ -283,29 +283,24 @@ def generate_homepage(tools_list, comparisons):
     featured_reviews = featured_tools[:4]
     featured_comparisons = comparisons[:4] if comparisons else []
 
-    tool_items_list = []
-    for tool in featured_tools:
-        href = internal_url(f"/tools/{tool['slug']}-worth-it-calculator/")
-        name = html.escape(tool["name"])
-        tool_items_list.append(f'<li><a href="{href}">{name} Calculator</a></li>')
-    tool_items = "\n      ".join(tool_items_list)
+    tool_items = "\n      ".join(
+        f'<li><a href="{internal_url(f"/tools/{t["slug"]}-worth-it-calculator/")}">{html.escape(t["name"])} Calculator</a></li>'
+        for t in featured_tools
+    )
 
-    review_items_list = []
-    for tool in featured_reviews:
-        href = internal_url(f"/pages/{tool['slug']}-review/")
-        name = html.escape(tool["name"])
-        review_items_list.append(f'<li><a href="{href}">{name} Review</a></li>')
-    review_items = "\n      ".join(review_items_list)
+    review_items = "\n      ".join(
+        f'<li><a href="{internal_url(f"/pages/{t["slug"]}-review/")}">{html.escape(t["name"])} Review</a></li>'
+        for t in featured_reviews
+    )
 
-    if featured_comparisons:
-        comparison_items_list = []
-        for comparison in featured_comparisons:
-            href = internal_url(f"/compare/{comparison['slug']}/")
-            title = html.escape(comparison.get("title", comparison["slug"].replace("-", " ").title()))
-            comparison_items_list.append(f'<li><a href="{href}">{title}</a></li>')
-        comparison_items = "\n      ".join(comparison_items_list)
-    else:
-        comparison_items = "<li>No comparisons added yet</li>"
+    comparison_items = (
+        "\n      ".join(
+            f'<li><a href="{internal_url(f"/compare/{c["slug"]}/")}">{html.escape(c.get("title", c["slug"].replace("-", " ").title()))}</a></li>'
+            for c in featured_comparisons
+        )
+        if featured_comparisons
+        else "<li>No comparisons added yet</li>"
+    )
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -388,10 +383,10 @@ def generate_sitemap(tools_list, comparisons, guides):
             }
         )
 
-    for comparison in comparisons:
+    for comp in comparisons:
         urls.append(
             {
-                "loc": absolute_url(f"/compare/{comparison['slug']}/"),
+                "loc": absolute_url(f"/compare/{comp['slug']}/"),
                 "lastmod": now,
                 "priority": "0.75",
             }
@@ -410,11 +405,11 @@ def generate_sitemap(tools_list, comparisons, guides):
         '<?xml version="1.0" encoding="UTF-8"?>',
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
     ]
-    for url in urls:
+    for u in urls:
         sitemap_lines.append("  <url>")
-        sitemap_lines.append(f"    <loc>{html.escape(url['loc'])}</loc>")
-        sitemap_lines.append(f"    <lastmod>{url['lastmod']}</lastmod>")
-        sitemap_lines.append(f"    <priority>{url['priority']}</priority>")
+        sitemap_lines.append(f"    <loc>{html.escape(u['loc'])}</loc>")
+        sitemap_lines.append(f"    <lastmod>{u['lastmod']}</lastmod>")
+        sitemap_lines.append(f"    <priority>{u['priority']}</priority>")
         sitemap_lines.append("  </url>")
     sitemap_lines.append("</urlset>")
 
@@ -431,7 +426,7 @@ def main():
     tools_dir = root / "tools"
     tools_dir.mkdir(parents=True, exist_ok=True)
 
-    valid_tools = [tool for tool in tools_list if "slug" in tool]
+    valid_tools = [t for t in tools_list if "slug" in t]
     for tool in valid_tools:
         calc_dir = tools_dir / f"{tool['slug']}-worth-it-calculator"
         calc_dir.mkdir(parents=True, exist_ok=True)
@@ -439,6 +434,7 @@ def main():
         (calc_dir / "index.html").write_text(content, encoding="utf-8")
 
     (tools_dir / "index.html").write_text(generate_hub_page(valid_tools), encoding="utf-8")
+
     (root / "index.html").write_text(generate_homepage(valid_tools, comparisons), encoding="utf-8")
 
     guide_template = load_template("category_guide.html")
@@ -456,7 +452,9 @@ def main():
         encoding="utf-8",
     )
 
-    print(f"Generated {len(valid_tools)} calculators + {len(guides)} guides + homepage + hub + sitemap.")
+    print(
+        f"Generated {len(valid_tools)} calculators + {len(guides)} guides + homepage + hub + sitemap."
+    )
 
 
 if __name__ == "__main__":
